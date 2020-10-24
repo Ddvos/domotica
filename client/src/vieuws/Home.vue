@@ -11,8 +11,8 @@
 
   <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="font-weight-light">Domotica Control</h1>
-        <p class="lead text-muted">Via this page you can transmit and receive OSC data.</p>
+        <h1 class="font-weight-light">RC car control</h1>
+        <p class="lead text-muted">bestuur de auto via deze pagina</p>
         <p>
   
         </p>
