@@ -15,6 +15,14 @@
 
 export default {
   name: 'app',
+
+  created() {
+  if (this.$workbox) {
+    this.$workbox.addEventListener("waiting", () => {
+      this.showUpdateUI = true;
+    });
+  }
+}
 }
 </script>
 
