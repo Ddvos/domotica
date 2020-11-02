@@ -1,15 +1,19 @@
 <template>
 <div class="background">
-
-   <div class="livefeed">
-      <div class="battery">Batterij: 80%</div>
-      <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
+  <div class="row">
+    <div class="col-2" >
+      <div class="data">
+        <p>hier komt data</p>
+      </div>
    </div>
-  
-  
- 
+   <div class="col-10" >
+    <div class="livefeed">
+        <div class="battery">Batterij: 80%</div>
+        <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
+    </div>
+  </div>
 
- 
+ </div>
 </div>
   
 </template>
@@ -151,20 +155,36 @@ export default {
 
 .background{
    width: 100%;
+  height: 100vh;
+}
+
+.row,.col-10,.col-2{
+    margin: 0;
+    padding:0;
+  height: 100vh;
+  }
+
+
+.data{
+    color: white;
+    display: flex;
+   width: 100%;
   height: 100%;
+    background-color: #1e3a42;
+
 }
 
 .livefeed{
    width: 100%;
-  height: 80vh;
+  height: 100%;
 }
 
   video{
    // position: absolute;
     margin-left: 0;
-     width: 60vw;
-     height: 50vh;
-    background-color: #1e3a42;
+     width: 100%;
+     height: 100%;
+    background-color: #2a2a2b;
     z-index:1;
 }
 
