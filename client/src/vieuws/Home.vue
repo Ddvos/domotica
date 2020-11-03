@@ -3,6 +3,7 @@
   <div class="row">
     <div class="col-2" >
       <div class="data">
+        <h>Car Control</h>
         <p>hier komt data</p>
       </div>
    </div>
