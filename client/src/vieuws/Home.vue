@@ -3,8 +3,15 @@
   <div class="row">
     <div class="col-2" >
       <div class="data">
-        <h>Car Control</h>
-        <p>hier komt data</p>
+        <h3>Car Control</h3>
+         <ul>
+          <li>status: {{status}}</li>
+          <li>snelheid: {{speed}}km</li>
+          <li>accu: {{accu}}%</li>
+          <li>trim: {{trim}}km</li>
+          <li>verlichting: {{light}}</li>
+          <li>camera: {{camera}}</li>
+        </ul>
       </div>
    </div>
    <div class="col-10" >
@@ -37,16 +44,13 @@ export default {
 
   data() {
   return{
-    value: 60,
-    addressen:[],
-    message:'',
-    address:'',
-    message2:'',
-    address2:'',
-    videoTime: 30,
-    x: 0,
     
-    
+    status: "ok",
+    speed: 0,
+    accu: 0,
+    trim: 0,
+    light: "uit",
+    camera: "offline",
     
      
     
@@ -60,35 +64,9 @@ export default {
    
 
    
-    total: function () {
-        
-      return this.value 
-    }
   },
   methods:{
 
-     videoPlayBack: function () {
-        //var vid = document.getElementById("myVideo");
-     
-           //this.$refs.myVideo.currentTime=10;
-           // vid.play();
-  
-    },
-    greet: function(){
-      
-      port.send({
-        address: "/hello",
-          args: ["De slider werkt!"]
-         });
-    },
-      sendSlider: function(){
-
-        port.send({
-        address: "/hello",
-          args: [this.value]
-         });
-
-     },
       OSCMessage: function(){ 
                
         port.on("message", (oscMessage) => {
@@ -101,26 +79,7 @@ export default {
       OSCMessages: function(oscMessage){ 
   
          
-        var n = this.addressen.includes(oscMessage.address) // looks if address exist in the array if not N false otherwise it is true
-         
-        //console.log(oscMessage);
-        if(n == false) {   // if n is false address dont exist en will add new adress in the array                    
-            this.addressen.push(oscMessage.address);            
-        }
-
-        // first address with data
-      if(oscMessage.address == this.addressen[0] ){
-          this.message= 'rgb('+oscMessage.args+')'
-          this.address= oscMessage.address
-          //console.log(this.message); 
-        }
-
-    // second address with data
-      if(oscMessage.address == this.addressen[1] ){
-          this.message2= oscMessage.args
-          this.address2= oscMessage.address
-          //console.log(this.message); 
-        }
+    console.log(oscMessage)
          
      }, 
    
@@ -149,10 +108,19 @@ export default {
 .data{
   position: relative;
   color: white;
+  padding-top: 50px;
+
    width: 100%;
   height: 100vh;
     background-color: #1e3a42;
 
+}
+
+ul {
+    list-style-type: none;
+    text-align: left;
+    padding-top: 30px;
+    padding-left: 60px;
 }
 
 .livefeed{

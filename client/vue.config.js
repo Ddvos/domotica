@@ -13,6 +13,7 @@ module.exports={
         name: 'Car control',
         themeColor: "#03566b",
         msTileColor: "#03566b",
+        orientation:  "landscape",
         appleMobileWebAppCache: "yes",
         appleMobileWebAppStatusBarStyle: 'black',
         manifestOptions: {
