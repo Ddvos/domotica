@@ -10,11 +10,13 @@ module.exports={
         }
     },
     pwa: {
-        themeColor: "#42b983",
-        msTileColor: "#42b983",
+        name: 'Car control',
+        themeColor: "#03566b",
+        msTileColor: "#03566b",
         appleMobileWebAppCache: "yes",
+        appleMobileWebAppStatusBarStyle: 'black',
         manifestOptions: {
-          background_color: "#42b983"
+          background_color: "#03566b"
         }
       },
 }

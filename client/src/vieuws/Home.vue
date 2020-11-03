@@ -8,7 +8,6 @@
    </div>
    <div class="col-10" >
     <div class="livefeed">
-        <div class="battery">Batterij: 80%</div>
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
   </div>
@@ -17,13 +16,12 @@
 </div>
   
 </template>
-<script src="../../node_modules/osc/dist/osc-browser.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 
             
 <script>
 import osc from "osc";
-import $ from 'jquery';
+
 
 
  var port = new osc.WebSocketPort({
@@ -67,25 +65,7 @@ export default {
     }
   },
   methods:{
-    updateCoordinates: function(event) {
 
-      var rect = myVideo.getBoundingClientRect(); // postion of video element 
-      console.log(rect.right, rect.left);
-     
-      this.x =(event.clientX-rect.left)*((5)/(rect.right-rect.left));
-      this.x =  this.x.toFixed(2)
-   console.log( this.x);
-      //
-       this.$refs.myVideo.currentTime =this.x; 
-        //this.$refs.myVideo.play();
-
-        //sending mouse postion value over OSC to the studio
-         port.send({
-          address: "/mousePosition ",
-          args: [this.x]
-         });
-    
-    },
      videoPlayBack: function () {
         //var vid = document.getElementById("myVideo");
      
@@ -154,22 +134,22 @@ export default {
 <style lang="scss" scoped>
 
 .background{
-   width: 100%;
+  width: 100vw;
   height: 100vh;
+  background: #1e3a42;
 }
 
 .row,.col-10,.col-2{
-    margin: 0;
+     margin: 0;
     padding:0;
-  height: 100vh;
   }
 
 
 .data{
-    color: white;
-    display: flex;
+  position: relative;
+  color: white;
    width: 100%;
-  height: 100%;
+  height: 100vh;
     background-color: #1e3a42;
 
 }

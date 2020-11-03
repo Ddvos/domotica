@@ -2,7 +2,7 @@
 
 
   <div class="parentBackground">
-     {{color1Position}}
+
     <div class="backgroundGradient" v-bind:style="{ 'background-image': 'linear-gradient(0deg,'+color1.hex+' 0%,'+color1.hex+' '+color1Position+'%, '+color2.hex+' '+color2Position+'%,'+color2.hex+' 100%)' }">
     </div>     <!-- <chrome-picker :value="colors" @input="updateValue"></chrome-picker> -->
   <div class="colorPicker">
