@@ -362,7 +362,7 @@ var osc = require("osc");
 
 /// conncection to own server
 var porttoserver = new osc.WebSocketPort({
-  url: "wss://circusfamilyprojects.nl:8084" //  ws://localhost:8083 online server wss://circusfamilyprojects.nl:8084
+  url: "wss://stepverder.nl:8084" //  ws://localhost:8083 online server wss://circusfamilyprojects.nl:8084
 }); 
 
 porttoserver.open();
