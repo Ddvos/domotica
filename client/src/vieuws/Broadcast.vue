@@ -21,11 +21,6 @@ import io from "socket.io-client";
 
 export default {
   
-   props: {
-    userId: { 
-      required: true,
-    },
-  },
 
   data() {
   return{
@@ -75,7 +70,7 @@ export default {
                     'wss:' :
                     'ws:'
                 );
-                ws = new WebSocket('wss://circusfamilyprojects.nl:4084/'+this.user+'');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:8084
+                ws = new WebSocket('wss://stepverder.nl:4084/'+this.user+'');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:8084
 
                
                 const onOpen = () => {

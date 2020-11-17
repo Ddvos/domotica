@@ -1,7 +1,7 @@
 <template>
 <div class="background">
   <div class="row">
-    <div class="col-2" >
+    <div class="col-3" >
       <div class="data">
         <h4>Car Control</h4>
          <ul>
@@ -14,7 +14,7 @@
         </ul>
       </div>
    </div>
-   <div class="col-10" >
+   <div class="col-9" >
     <div class="livefeed">
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
@@ -29,6 +29,7 @@
             
 <script>
 import osc from "osc";
+
 
 
 
@@ -57,7 +58,7 @@ export default {
     
   }},
    created: function(){
-             this.OSCMessage();    
+           
              this.gameController()  
           //console.log(message);
 
@@ -67,33 +68,13 @@ export default {
 
    
   },
-  methods:{
-
-      OSCMessage: function(){ 
-               
-        port.on("message", (oscMessage) => {
-          
-             console.log(oscMessage);
-             this.OSCMessages(oscMessage);
-          
-      });
-     },
-      OSCMessages: function(oscMessage){ 
-  
-         
-    console.log(oscMessage)
-         
-     }, 
-          gameController(){
+  methods:{ 
+     gameController(){
          // gamepadconnected with pc
-        
-       
+          
            window.addEventListener("gamepadconnected", () => {
-               //this.hideGamepad = false;
-                         
-                           
+               //this.hideGamepad = false;          
               this.inputController()
-
               //gamepads is an array with all the gamepad buttons
               this.gamepads = navigator.getGamepads();
               //console.log(this.gamepads);
@@ -150,7 +131,134 @@ export default {
         }
         
       window.requestAnimationFrame(this.inputController) // this reload the function inputcontroller function every framerate
+      }, // einde input controller
+       async videoStream(){
+
+              /// websocket WebRTC for live stream
+      
+
+      const config = {
+        iceServers: [{
+          urls: ['stun:stun.l.google.com:19302']
+        }]
+      };
+
+      const getRandomId = () => {
+        return Math.floor(Math.random() * 10000);
+      };
+
+      const peerId = this.config.placeholder+getRandomId();
+      const peerType = 'screen';
+      const connections = new Map();
+
+      let ws;
+      const getSocket = async (peerId, peerType) => {
+        if (ws) return ws;
+
+        return new Promise((resolve, reject) => {
+          try {
+            
+            ws = new WebSocket('wss://stepverder.nl/:4084');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:4084
+          
+          console.log(peerId)
+           
+           const onOpen = () => {
+             
+              ws.send(JSON.stringify({
+                type: 'register',
+                peerType,
+                peerId,
+              }));
+
+              ws.removeEventListener('open', onOpen);
+              // console.log(this.test);
+              resolve(ws);
+            };
+
+            ws.addEventListener('open', onOpen);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      };
+
+      try {
+        //console.log('in screen');
+        const socket = await getSocket(peerId, peerType);
+        socket.addEventListener('message', async (e) => {
+          try {
+            const msg = JSON.parse(e.data);
+             // console.log("camera and selected car are the same "+ msg.from)
+                this.Camconnected = true;
+            if (msg.type === 'offer') {
+              const peerConnection = new RTCPeerConnection(config);
+              connections.set(msg.from, peerConnection);
+
+              peerConnection.ontrack = (e) => {
+                console.log('on track', e);
+                window.v.srcObject = e.streams[0];
+                 window.v.play();
+                window.wait.classList.add('hidden');
+                window.controls.classList.remove('hidden');
+              };
+
+              peerConnection.onicecandidate = (e) => {
+                if (e.candidate) {
+                  socket.send(JSON.stringify({
+                    type: 'candidate',
+                    from: peerId,
+                    to: msg.from,
+                    data: e.candidate,
+                  }));
+                }
+              };
+
+              await peerConnection.setRemoteDescription(msg.data);
+              const sdp = await peerConnection.createAnswer();
+              await peerConnection.setLocalDescription(sdp);
+
+             // console.log('sending answer');
+              socket.send(JSON.stringify({
+                to: msg.from,
+                from: peerId,
+                type: 'answer',
+                data: peerConnection.localDescription
+              }));
+            }
+
+            if (msg.type === 'disconnect') {
+              const connection = connections.get(msg.from);
+              if (connection) {
+                console.log('Disconnecting from', msg.from);
+                connection.ontrack = null;
+                connection.onicecandidate = null;
+                connection.close();
+                connections.delete(msg.from);
+              }
+            }
+
+            if (msg.type === 'candidate') {
+              const connection = connections.get(msg.from);
+              if (connection) {
+                console.log('Adding candidate to', msg.from);
+                connection.addIceCandidate(new RTCIceCandidate(
+                  msg.data
+                ));
+              }
+            }
+           
+          } catch (e) {
+            console.error(e);
+                 console.log("error niewe verbiding openen lukt niet")
+          }
+        });
+
+       } catch (e) {
+          console.error(e);
+          console.log("error niewe verbiding openen lukt niet")
+          }
       },
+      
    
   },
   
