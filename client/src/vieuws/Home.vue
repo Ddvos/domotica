@@ -61,6 +61,7 @@ export default {
            
              this.gameController()  
           //console.log(message);
+          this.videoStream()
 
      },
   computed: {
@@ -147,7 +148,7 @@ export default {
         return Math.floor(Math.random() * 10000);
       };
 
-      const peerId = this.config.placeholder+getRandomId();
+      const peerId = 'ipcar'+getRandomId();
       const peerType = 'screen';
       const connections = new Map();
 
@@ -158,7 +159,7 @@ export default {
         return new Promise((resolve, reject) => {
           try {
             
-            ws = new WebSocket('wss://stepverder.nl/:4084');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:4084
+            ws = new WebSocket('wss://stepverder.nl:4084/ipcar');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:4084
           
           console.log(peerId)
            
@@ -183,17 +184,17 @@ export default {
       };
 
       try {
-        //console.log('in screen');
+       console.log('in screen');
         const socket = await getSocket(peerId, peerType);
         socket.addEventListener('message', async (e) => {
           try {
             const msg = JSON.parse(e.data);
-             // console.log("camera and selected car are the same "+ msg.from)
-                this.Camconnected = true;
+              console.log("camera and selected car are the same "+ msg.from)
+                //this.Camconnected = true;
             if (msg.type === 'offer') {
               const peerConnection = new RTCPeerConnection(config);
               connections.set(msg.from, peerConnection);
-
+                console.log('incoming data '+e);
               peerConnection.ontrack = (e) => {
                 console.log('on track', e);
                 window.v.srcObject = e.streams[0];

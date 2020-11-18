@@ -194,14 +194,14 @@ wsServer.on('connection', (socket,req) => {
       if (peerType === 'screen') {
         for (let cameraId of cameras) {
           const cameraSocket = sockets.get(cameraId);
-          if (cameraId == peerId.slice(0, 4)){ // als de camera id en  car id het zelfde zijn stuur dan de screenId (broadcast car)
+          if (cameraId == peerId.slice(0, 5)){ // als de camera id en  car id het zelfde zijn stuur dan de screenId (broadcast car)
             cameraSocket.send(JSON.stringify({
               type: 'screens',
               screens: [ peerId ],
             }));
           }
            else{
-            console.log("camera ID "+cameraId +"is niet het zelfde als " + peerId.slice(0, 4));
+            console.log("camera ID "+cameraId +"is niet het zelfde als " + peerId.slice(0, 5));
             }
         
         }
@@ -210,7 +210,7 @@ wsServer.on('connection', (socket,req) => {
 
     if (msg.type === 'offer') {
       var selectedCar = msg.to
-      if(msg.from == selectedCar.slice(0, 4) ){ /// vergelijkt het camera beeld met de geselcteerde auto
+      if(msg.from == selectedCar.slice(0, 5) ){ /// vergelijkt het camera beeld met de geselcteerde auto
          console.log("camera en beeld zijn het zelfde");
         info(`camera ${msg.from} sent offer to screen ${msg.to}`);
         if (!screens.has(msg.to)) {
@@ -220,7 +220,7 @@ wsServer.on('connection', (socket,req) => {
 
         var selectedCar = msg.to
 
-        console.log(`camera ${msg.from} sent offer to screen ${selectedCar.slice(0, 4)}`);
+        console.log(`camera ${msg.from} sent offer to screen ${selectedCar.slice(0, 5)}`);
         const socket = sockets.get(msg.to);
         socket.send(e);
       }

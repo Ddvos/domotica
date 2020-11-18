@@ -121,6 +121,7 @@ export default {
                   const peerConnection = new RTCPeerConnection(config);
                   connections.set(screen, peerConnection);
 
+                  console.log("RTCP connection")
                   // peerConnection.addStream(window.v.srcObject);
                   for (let track of mediaStream.getTracks()) {
                     peerConnection.addTrack(track, mediaStream);
