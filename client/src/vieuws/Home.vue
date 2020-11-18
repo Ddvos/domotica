@@ -12,6 +12,7 @@
           <li>verlichting: {{light}}</li>
           <li>camera: {{camera}}</li>
         </ul>
+          <button v-on:click="connect">Connect</button>
       </div>
    </div>
    <div class="col-9" >
@@ -61,7 +62,7 @@ export default {
            
              this.gameController()  
           //console.log(message);
-          this.videoStream()
+     
 
      },
   computed: {
@@ -133,6 +134,9 @@ export default {
         
       window.requestAnimationFrame(this.inputController) // this reload the function inputcontroller function every framerate
       }, // einde input controller
+      connect(){
+          this.videoStream()
+      },
        async videoStream(){
 
               /// websocket WebRTC for live stream
@@ -190,17 +194,18 @@ export default {
           try {
             const msg = JSON.parse(e.data);
               console.log("camera and selected car are the same "+ msg.from)
-                //this.Camconnected = true;
+               
             if (msg.type === 'offer') {
               const peerConnection = new RTCPeerConnection(config);
               connections.set(msg.from, peerConnection);
                 console.log('incoming data '+e);
+                 this.camera = "Online";
               peerConnection.ontrack = (e) => {
                 console.log('on track', e);
                 window.v.srcObject = e.streams[0];
                  window.v.play();
-                window.wait.classList.add('hidden');
-                window.controls.classList.remove('hidden');
+                //window.wait.classList.add('hidden');
+               // window.controls.classList.remove('hidden');
               };
 
               peerConnection.onicecandidate = (e) => {
@@ -230,6 +235,7 @@ export default {
             if (msg.type === 'disconnect') {
               const connection = connections.get(msg.from);
               if (connection) {
+                 this.camera = "Offline";
                 console.log('Disconnecting from', msg.from);
                 connection.ontrack = null;
                 connection.onicecandidate = null;
