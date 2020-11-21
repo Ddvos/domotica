@@ -375,10 +375,10 @@ io.on("connection",(socket)=>{
 
   // incoming data from controller
 
-  socket.emit("inputRaspberrypi", 12);
+  
     socket.on("controllerInput",(controllerData)=>{
       console.log(controllerData)
-
+      io.emit("inputRaspberrypi", 13);
        // deze data is van de controller en gaat naar de Raspberry pi om de auto aan te sturen
       
     });
