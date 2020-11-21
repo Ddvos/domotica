@@ -150,7 +150,7 @@ export default {
         //  this.BL = gamepads[0].buttons[14].value;  //Button left
         //  this.BR = gamepads[0].buttons[15].value;  //Button right
 
-        ipcar.emit("controllerInput", [this.xAxesLef,this.Kruisje, this.Kruisje, this.speed ]);
+        ipcar.emit("controllerInput", [this.xAxesLeft, this.speed ]);
       //console.log( this.Kruisje);
        
 
