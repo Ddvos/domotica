@@ -369,7 +369,7 @@ const io = require("socket.io")(userCountserver);
 
 const raumRooms = ["clientRoom"]
 
-io.of("/ipcar").on("connection",(socket)=>{
+io.on("connection",(socket)=>{
 
   console.log("new connection is made")
  //var room = io.sockets.adapter.rooms[''];
