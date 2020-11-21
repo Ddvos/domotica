@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-3" >
       <div class="data">
-        <h4>Car Control</h4>
+        <h4>IP Car</h4>
          <ul>
           <li>status: {{status}}</li>
           <li>snelheid: {{speed}}km</li>
@@ -30,7 +30,7 @@
             
 <script>
 import osc from "osc";
-
+import io from "socket.io-client";
 
 
 
@@ -39,6 +39,9 @@ import osc from "osc";
         }); 
 
  port.open();
+
+ //connect to server
+let ipcar = io.connect("https://stepverder.nl:6500/ipcar") // poort to connect with
 
 
 export default {
@@ -60,8 +63,8 @@ export default {
   }},
    created: function(){
            
-             this.gameController()  
-          //console.log(message);
+       this.gameController()  
+       this.siteVisitor();  
      
 
      },
@@ -71,6 +74,26 @@ export default {
    
   },
   methods:{ 
+     siteVisitor: function(){
+
+      ipcar.on("welcome",(data)=>{
+          console.log(data)
+        })
+
+         ipcar.on("clientList",(clients)=>{
+          console.log(clients)
+        })
+
+        ipcar.emit("joinIPcar", "clientRoom");
+
+        ipcar.on("newUser",(res) =>{
+          console.log(res)
+
+        })
+
+       ///raum.on("err",(err)=> console.log(err))
+       //raum.on("succes",(res)=> console.log(res))
+     },
      gameController(){
          // gamepadconnected with pc
           

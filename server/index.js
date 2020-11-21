@@ -369,19 +369,19 @@ const io = require("socket.io")(userCountserver);
 
 const raumRooms = ["clientRoom"]
 
-io.of("/raum").on("connection",(socket)=>{
+io.of("/ipcar").on("connection",(socket)=>{
 
  //var room = io.sockets.adapter.rooms[''];
-  socket.emit("welcome", "Hello and welcome to the RAUM Area");
+  socket.emit("welcome", "Hello and welcome to ip car socket.io");
 
-  socket.on("joinRaum",(room)=>{
+  socket.on("joinIPcar",(room)=>{
     if(raumRooms.includes(room)){
        socket.join(room);
-       io.of("/raum").to(room).emit("newUser", "new visistor has joined the room " + room)  //melding nieuwe deelnemer
+       io.of("/ipcar").to(room).emit("newUser", "new visistor has joined the room " + room)  //melding nieuwe deelnemer
 
-       io.of('/raum').in(room).clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
+       io.of('/ipcar').in(room).clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
          if (error) throw error;
-         io.of("/raum").to(room).emit("clientList", clients)  // sends/emits a array with all the clients
+         io.of("/ipcar").to(room).emit("clientList", clients)  // sends/emits a array with all the clients
         // console.log(clients); // => [Anw2LatarvGVVXEIAAAD]
        });
      
@@ -395,9 +395,9 @@ io.of("/raum").on("connection",(socket)=>{
 
   //socket.disconnect();
    socket.on('disconnect', () => {
-     io.of('/raum').in("clientRoom").clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
+     io.of('/ipcar').in("clientRoom").clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
        if (error) throw error;
-       io.of("/raum").to("clientRoom").emit("clientList", clients)  // sends/emits a array with all the clients
+       io.of("/ipcar").to("clientRoom").emit("clientList", clients)  // sends/emits a array with all the clients
        console.log(clients); // => [Anw2LatarvGVVXEIAAAD]
 
          // maakt verbinidng met deze server en stuurt via OSC de huidige lijst met klanten naar de studio in amsterdam
