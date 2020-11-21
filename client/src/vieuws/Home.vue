@@ -84,7 +84,7 @@ export default {
           console.log(clients)
         })
 
-        ipcar.emit("joinIPcar", "clientRoom");
+        //ipcar.emit("joinIPcar", "clientRoom");
 
         ipcar.on("newUser",(res) =>{
           console.log(res)
