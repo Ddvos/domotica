@@ -394,7 +394,7 @@ io.on("connection",(socket)=>{
 
  /// incoming data from controller
  socket.on("controllerInput",(controllerData)=>{
-   //console.log(controllerData)
+    console.log(controllerData)
 
    // deze data is van de controller en gaat naar de Raspberry pi om de auto aan te sturen
    socket.emit("inputRaspberrypi", controllerData);
@@ -412,7 +412,7 @@ io.on("connection",(socket)=>{
   //     //console.log('user disconnected');
   //    });
 
-     console.log("Disconnect: "+clients);
+     console.log("Car Disconnect ");
  });
 });  
 
