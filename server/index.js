@@ -374,11 +374,13 @@ io.on("connection",(socket)=>{
   socket.emit("welcome", "Hello and welcome to the ip car socket.io");
 
   // incoming data from controller
+
+  socket.emit("inputRaspberrypi", 12);
     socket.on("controllerInput",(controllerData)=>{
       console.log(controllerData)
 
        // deze data is van de controller en gaat naar de Raspberry pi om de auto aan te sturen
-      socket.emit("inputRaspberrypi", controllerData);
+      
     });
 
   socket.on("joinIPcar",(room)=>{
