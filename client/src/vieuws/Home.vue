@@ -140,7 +140,7 @@ export default {
           // set button values eagle to vue variable so they can be send via OSC
           this.xAxesLeft= gamepads[0].axes[0];   // x as linkerkant
           this.Kruisje = gamepads[0].buttons[0].value;  // kruisje
-          this.Driehoekje = gamepads[0].buttons[3].value; // driehoekje
+          this.Kruisje = gamepads[0].buttons[3].value; // driehoekje
          // this.L1 = gamepads[0].buttons[4].value;  //L1
          // this.R1 = gamepads[0].buttons[5].value;  //R1
          // this.L2 = gamepads[0].buttons[6].value;  //L2
@@ -149,7 +149,8 @@ export default {
           this.speed = (gamepads[0].buttons[7].value*25).toFixed(2);  //R2
         //  this.BL = gamepads[0].buttons[14].value;  //Button left
         //  this.BR = gamepads[0].buttons[15].value;  //Button right
-        
+
+        ipcar.emit("controllerInput", [this.xAxesLef,this.Kruisje, this.Kruisje, this.speed ]);
       //console.log( this.Kruisje);
        
 

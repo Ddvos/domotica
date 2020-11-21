@@ -393,6 +393,11 @@ io.of("/ipcar").on("connection",(socket)=>{
     }
  });
 
+ /// incoming
+ socket.on("controllerInput",(controllerData)=>{
+   console.log(controllerData)
+ });
+
   //socket.disconnect();
    socket.on('disconnect', () => {
      io.of('/ipcar').in("clientRoom").clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
