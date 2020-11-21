@@ -370,10 +370,8 @@ const io = require("socket.io")(userCountserver);
 const raumRooms = ["clientRoom"]
 
 io.on("connection",(socket)=>{
-
-  console.log("new connection is made")
  //var room = io.sockets.adapter.rooms[''];
-  socket.emit("welcome", "Hello and welcome to ip car socket.io");
+  socket.emit("welcome", "Hello and welcome to the ip car socket.io");
 
   socket.on("joinIPcar",(room)=>{
     if(raumRooms.includes(room)){
@@ -394,23 +392,27 @@ io.on("connection",(socket)=>{
     }
  });
 
- /// incoming
+ /// incoming data from controller
  socket.on("controllerInput",(controllerData)=>{
-   console.log(controllerData)
+   //console.log(controllerData)
+
+   // deze data is van de controller en gaat naar de Raspberry pi om de auto aan te sturen
+   socket.emit("inputRaspberrypi", controllerData);
  });
 
   //socket.disconnect();
-   socket.on('disconnect', () => {
-     io.of('/ipcar').in("clientRoom").clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
-       if (error) throw error;
-       io.of("/ipcar").to("clientRoom").emit("clientList", clients)  // sends/emits a array with all the clients
-       console.log(clients); // => [Anw2LatarvGVVXEIAAAD]
+    socket.on('disconnect', () => {
+  //    io.of('/ipcar').in("clientRoom").clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
+  //      if (error) throw error;
+  //      io.of("/ipcar").to("clientRoom").emit("clientList", clients)  // sends/emits a array with all the clients
 
-         // maakt verbinidng met deze server en stuurt via OSC de huidige lijst met klanten naar de studio in amsterdam
-      //console.log('user disconnected');
-     });
+  //       // => [Anw2LatarvGVVXEIAAAD]
 
-    
+  //        // maakt verbinidng met deze server en stuurt via OSC de huidige lijst met klanten naar de studio in amsterdam
+  //     //console.log('user disconnected');
+  //    });
+
+     console.log("Disconnect: "+clients);
  });
 });  
 

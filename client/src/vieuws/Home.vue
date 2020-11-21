@@ -41,7 +41,7 @@ import io from "socket.io-client";
  port.open();
 
  //connect to server
-let ipcar = io.connect("https://stepverder.nl:6500/ipcar") // poort to connect with
+let ipcar = io.connect("https://stepverder.nl:6500") // poort to connect with
 
 
 export default {
