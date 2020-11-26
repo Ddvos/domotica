@@ -57,6 +57,7 @@ export default {
     light: "uit",
     camera: "offline",
     xAxesLeft: 0,
+    sendSpeedValue: 0,
     
      
     
@@ -143,13 +144,26 @@ export default {
           this.Kruisje = gamepads[0].buttons[3].value; // driehoekje
          // this.L1 = gamepads[0].buttons[4].value;  //L1
          // this.R1 = gamepads[0].buttons[5].value;  //R1
-         // this.L2 = gamepads[0].buttons[6].value;  //L2
+        
 
          // maping speed to km/h
-          this.speed = (gamepads[0].buttons[7].value*25).toFixed(2);  //R2
+   
+
+      
+          this.speed = this.map(gamepads[0].buttons[7].value,0,1,1500,1600);  //R2
+          this.reverse = this.map(gamepads[0].buttons[6].value,0,1,1500,1400);  //L2
         //  this.BL = gamepads[0].buttons[14].value;  //Button left
         //  this.BR = gamepads[0].buttons[15].value;  //Button right
 
+        // function zodat je niet kan remmen en gas geven tegelijk
+        if( this.speed >1501){
+            this.sendSpeedValue =this.speed // send voorruit rijden
+        } else if(this.reverse <1501){
+            this.sendSpeedValue = this.reverse // send achteruit rijden
+        }else if(this.reverse <1499 &&  this.speed >1501){
+           this.sendSpeedValue = 1500; // voor en achteruit tegelijk is 0
+        }
+      console.log(this.sendSpeedValue)
         ipcar.emit("controllerInput", [this.xAxesLeft, this.speed ]);
       //console.log( this.Kruisje);
        
@@ -158,6 +172,9 @@ export default {
         
       window.requestAnimationFrame(this.inputController) // this reload the function inputcontroller function every framerate
       }, // einde input controller
+      map( x,  in_min,  in_max,  out_min,  out_max){ // maps de waardes van de controller zodat de de ESC ze begrijpt
+            return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+      },
       connect(){
           this.videoStream()
       },
