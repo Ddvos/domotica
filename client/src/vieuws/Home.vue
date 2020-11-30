@@ -1,7 +1,7 @@
 <template>
 <div class="background">
   <div class="row">
-    <div class="col-3" >
+    <div class="information" >
       <div class="data">
         <h4>IP Car</h4>
          <ul>
@@ -15,11 +15,9 @@
           <button v-on:click="connect">Connect</button>
       </div>
    </div>
-   <div class="col-9" >
     <div class="livefeed">
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
-  </div>
 
  </div>
 </div>
@@ -325,7 +323,7 @@ export default {
   
 }
 
-.row,.col-10,.col-2{
+.row,.col-9,.col-3{
      margin: 0;
     padding:0;
   }
@@ -335,11 +333,14 @@ export default {
   position: relative;
   color: white;
   padding-top: 50px;
-    text-align: left;
- margin-left: 20px;
-   width: 100%;
+  margin-left: 20px;
+  text-align: left;
+  width: 100%;
   height: 100vh;
-    background-color: #1e3a42;
+  background-color: #1e3a42;
+  padding: 12px;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 
 }
 h4{
@@ -352,10 +353,16 @@ ul {
     padding-top: 10px;
     padding-left: 5px;
 }
+.information{
+    width: 25vw;
+  height: 100vh;
+   z-index: 1;
+}
 
 .livefeed{
-   width: 100%;
-  height: 100%;
+   width: 75vw;
+  height: 100vh;
+  z-index: 2;
 }
 
   video{
@@ -364,7 +371,7 @@ ul {
      width: 100%;
      height: 100%;
     background-color: #2a2a2b;
-    z-index:1;
+    z-index:3;
 }
 
 </style>
