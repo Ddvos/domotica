@@ -164,7 +164,7 @@ export default {
            this.sendSpeedValue = 1500; // voor en achteruit tegelijk is 0
         }
       console.log(this.sendSpeedValue)
-        ipcar.emit("controllerInput", [this.xAxesLeft, this.speed ]);
+        ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
       //console.log( this.Kruisje);
        
 
@@ -173,7 +173,7 @@ export default {
       window.requestAnimationFrame(this.inputController) // this reload the function inputcontroller function every framerate
       }, // einde input controller
       map( x,  in_min,  in_max,  out_min,  out_max){ // maps de waardes van de controller zodat de de ESC ze begrijpt
-            return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+            return ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min).toFixed(0)
       },
       connect(){
           this.videoStream()
@@ -322,6 +322,7 @@ export default {
   width: 100vw;
   height: 100vh;
   background: #1e3a42;
+  
 }
 
 .row,.col-10,.col-2{
