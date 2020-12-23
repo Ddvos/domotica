@@ -1,5 +1,5 @@
 <template>
-<div class="background">
+<div class="background" ref="mouseEvent">
   <div class="row">
     <div class="information" >
       <div class="data">
@@ -67,6 +67,13 @@ export default {
      
 
      },
+    mounted: function(){
+       this.$refs.mouseEvent.addEventListener('touchmove',(event) =>{
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        },{ passive: false });
+
+    },
   computed: {
    
 
@@ -137,19 +144,20 @@ export default {
           }
 
           // set button values eagle to vue variable so they can be send via OSC
-          this.xAxesLeft= gamepads[0].axes[0];   // x as linkerkant
+     
           this.Kruisje = gamepads[0].buttons[0].value;  // kruisje
           this.Kruisje = gamepads[0].buttons[3].value; // driehoekje
          // this.L1 = gamepads[0].buttons[4].value;  //L1
          // this.R1 = gamepads[0].buttons[5].value;  //R1
         
 
-         // maping speed to km/h
+        
    
 
-      
+         // maping speed to km/h
           this.speed = this.map(gamepads[0].buttons[7].value,0,1,1500,1600);  //R2
           this.reverse = this.map(gamepads[0].buttons[6].value,0,1,1500,1400);  //L2
+          this.xAxesLeft = this.map(gamepads[0].axes[0],-1,1,500,2500); //x as linkerkant
         //  this.BL = gamepads[0].buttons[14].value;  //Button left
         //  this.BR = gamepads[0].buttons[15].value;  //Button right
 
@@ -161,7 +169,7 @@ export default {
         }else if(this.reverse <1499 &&  this.speed >1501){
            this.sendSpeedValue = 1500; // voor en achteruit tegelijk is 0
         }
-      console.log(this.sendSpeedValue)
+      console.log( this.xAxesLeft)
         ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
       //console.log( this.Kruisje);
        
@@ -368,6 +376,7 @@ ul {
   video{
    // position: absolute;
     margin-left: 0;
+    object-fit: cover;
      width: 100%;
      height: 100%;
     background-color: #2a2a2b;
