@@ -12,7 +12,7 @@
           <li>verlichting: {{light}}</li>
           <li>camera: {{camera}}</li>
         </ul>
-          <button v-on:click="connect">Connect</button>
+          <div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
       </div>
    </div>
     <div class="livefeed">
@@ -48,7 +48,8 @@ export default {
   data() {
   return{
     
-    status: "ok",
+    status: "connect",
+    statusButton: "connect",
     speed: 0,
     accu: 0,
     trim: 0,
@@ -56,6 +57,8 @@ export default {
     camera: "offline",
     xAxesLeft: 0,
     sendSpeedValue: 0,
+    Inactive: true,
+    Active: false,
     
      
     
@@ -247,6 +250,9 @@ export default {
               connections.set(msg.from, peerConnection);
                 console.log('incoming data '+e);
                  this.camera = "Online";
+                 this.statusButton = "connected",
+                 this.InActive = false
+                 this.Active = true
               peerConnection.ontrack = (e) => {
                 console.log('on track', e);
                 window.v.srcObject = e.streams[0];
@@ -283,6 +289,9 @@ export default {
               const connection = connections.get(msg.from);
               if (connection) {
                  this.camera = "Offline";
+                  this.statusButton = "connect",
+                  this.InActive = true
+                 this.Active = false
                 console.log('Disconnecting from', msg.from);
                 connection.ontrack = null;
                 connection.onicecandidate = null;
@@ -366,6 +375,36 @@ ul {
   height: 100vh;
    z-index: 1;
 }
+
+.ButtonInactive{
+  background-color: rgba(214, 13, 6, 0.5);
+  font-size: 100%;
+	border: 1px solid rgb(184, 46, 46);
+  border-radius: 5px;
+	width: 95px;
+	padding: 10px 0;
+	text-align: center;
+	display: inline-block;
+  margin-right: 10px;
+}
+   .ButtonInactive :hover{
+     background-color: rgba(184, 46, 46, 0.5)
+  }
+
+.Buttonactive{
+  background-color: rgba(6, 214, 13,0.5);
+  font-size: 100%;
+	border: 1px solid rgba(46, 184, 55,1);
+  border-radius: 5px;
+	width: 95px;
+	padding: 10px 0;
+	text-align: center;
+	display: inline-block;
+  margin-right: 10px;
+}
+   .Buttonactive :hover{
+     background-color: rgba(46, 184, 55,0.5)
+  }
 
 .livefeed{
    width: 75vw;
