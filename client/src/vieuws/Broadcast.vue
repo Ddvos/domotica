@@ -47,7 +47,9 @@ export default {
           console.log(this.user)
           const config = {
             iceServers: [{
-              urls: ['stun:stun.l.google.com:19302']
+               urls: 'turn:turn.stepverder.nl:3478', //'stun:stun.l.google.com:19302'  turn:178.62.209.37:3478
+                username: 'Dominique',
+                credential: 'WS7yq_jT'
             }]
           };
 
