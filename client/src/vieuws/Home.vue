@@ -100,6 +100,10 @@ export default {
 
         })
 
+        ipcar.on("disconnect"),(res)=>{
+            console.log("controller send niet naar server"+ res)
+        }
+
        ///raum.on("err",(err)=> console.log(err))
        //raum.on("succes",(res)=> console.log(res))
      },

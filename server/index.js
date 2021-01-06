@@ -405,7 +405,7 @@ io.on("connection",(socket)=>{
 
 
   //socket.disconnect();
-    socket.on('disconnect', () => {
+    socket.on('disconnect', (reason) => {
   //    io.of('/ipcar').in("clientRoom").clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
   //      if (error) throw error;
   //      io.of("/ipcar").to("clientRoom").emit("clientList", clients)  // sends/emits a array with all the clients
@@ -416,7 +416,7 @@ io.on("connection",(socket)=>{
   //     //console.log('user disconnected');
   //    });
 
-     console.log("Car Disconnect ");
+     console.log("Car Disconnect: " + reason);
  });
 });  
 
