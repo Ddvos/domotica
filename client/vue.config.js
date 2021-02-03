@@ -20,7 +20,7 @@ module.exports={
           background_color: "#03566b",
           icons: [
             {
-              src: "./src/assets/logo.png",
+              src: `/img/logo.png`,
               sizes: "512x512",
               type: "image/png",
               purpose: "maskable"

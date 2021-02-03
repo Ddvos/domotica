@@ -16,7 +16,8 @@
           </div>
             <div class='connected' >
                 <div v-if="!connected">Connection: offline</div> 
-                 <div v-if="connected">Connection: online</div>        
+                 <div v-if="connected">Connection: online</div>
+                 <img src="../assets/logo.png">        
             </div>
         </div>
         <div class="col-sm-1"> </div>

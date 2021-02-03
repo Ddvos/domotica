@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/css/Raum.ce1ca9c4.css"
   },
   {
-    "revision": "9b0a916bb82329e0bc82",
+    "revision": "d089f62cca79aa42e1ca",
     "url": "/css/app.352340e2.css"
   },
   {
@@ -16,12 +16,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/css/carcontrol.9228e1c4.css"
   },
   {
-    "revision": "fc4ee0afe945f04be12f",
-    "url": "/css/caroverview.948e74eb.css"
+    "revision": "e7092507653f146546c6",
+    "url": "/css/caroverview.0b2e1f46.css"
   },
   {
-    "revision": "44453d79b52006da915a",
-    "url": "/css/home.e4ba18aa.css"
+    "revision": "6b4d096a8fc03a99db5e",
+    "url": "/css/home.663eacba.css"
   },
   {
     "revision": "b5d9dbdf84bf989c3168",
@@ -64,7 +64,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/headerimage.8e9fcf4d.jpg"
   },
   {
-    "revision": "2fc2e351acf01f541eb4355aee64909c",
+    "revision": "9340873be1d02f9374ce25412a9ed6f9",
+    "url": "/img/logo.9340873b.png"
+  },
+  {
+    "revision": "35a484837aead5e525c2cce296aae1ae",
     "url": "/index.html"
   },
   {
@@ -88,8 +92,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/Raum~carcontrol~caroverview~peterplantenbak'~robeco~signify.0d8f98dd.js"
   },
   {
-    "revision": "9b0a916bb82329e0bc82",
-    "url": "/js/app.fb4b4d6f.js"
+    "revision": "d089f62cca79aa42e1ca",
+    "url": "/js/app.016cde15.js"
   },
   {
     "revision": "e17e53c547acaaa16bfe",
@@ -104,16 +108,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/carcontrol.ddad0fb9.js"
   },
   {
-    "revision": "fc4ee0afe945f04be12f",
-    "url": "/js/caroverview.62e4c711.js"
+    "revision": "e7092507653f146546c6",
+    "url": "/js/caroverview.3096bb77.js"
   },
   {
     "revision": "5cfb573874ab81989feb",
     "url": "/js/chunk-vendors.48768330.js"
   },
   {
-    "revision": "44453d79b52006da915a",
-    "url": "/js/home.ca3908a2.js"
+    "revision": "6b4d096a8fc03a99db5e",
+    "url": "/js/home.e8f567ca.js"
   },
   {
     "revision": "b5d9dbdf84bf989c3168",
@@ -144,7 +148,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/signify.df0a0b52.js"
   },
   {
-    "revision": "b1b6696d970b89aadc50b6b3159a6ad9",
+    "revision": "bb669967e2c98e0d89f382cd3e048980",
     "url": "/manifest.json"
   },
   {
