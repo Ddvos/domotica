@@ -26,6 +26,12 @@ module.exports={
               type: "image/png",
               purpose: "maskable"
             },
+            {
+                src: `/img/logo144.png`,
+                sizes: "144x144",
+                type: "image/png",
+                purpose: "maskable"
+              },
           ],
         }
       },

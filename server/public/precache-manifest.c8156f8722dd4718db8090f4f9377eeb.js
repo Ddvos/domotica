@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/css/caroverview.css"
   },
   {
-    "revision": "055787e672e5f8dd2b4f",
+    "revision": "1c928f9f4cfbdfc29017",
     "url": "/css/home.css"
   },
   {
@@ -116,7 +116,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/chunk-vendors.js"
   },
   {
-    "revision": "055787e672e5f8dd2b4f",
+    "revision": "1c928f9f4cfbdfc29017",
     "url": "/js/home.js"
   },
   {
@@ -148,7 +148,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/signify.js"
   },
   {
-    "revision": "bb669967e2c98e0d89f382cd3e048980",
+    "revision": "8491701b5308b221085a02d2da5febce",
     "url": "/manifest.json"
   },
   {
