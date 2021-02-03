@@ -1,12 +1,36 @@
-import { Workbox } from "workbox-window";
-let wb;
-if ("serviceWorker" in navigator) {
-  wb = new Workbox(`${process.env.BASE_URL}service-worker.js`);
-  wb.addEventListener("controlling", () => {
-    window.location.reload();
-  });
-  wb.register();
-} else {
-  wb = null;
+import { register } from 'register-service-worker'
+
+if (process.env.NODE_ENV === 'production') {
+  register(`${process.env.BASE_URL}service-worker.js`, {
+    ready () {
+      console.log(
+        'App is being served from cache by a service worker.\n'
+      )
+    },
+    cached () {
+      console.log('Content has been cached for offline use.')
+    },
+    updated () {
+      console.log('New content is available; please refresh.')
+    },
+    offline () {
+      console.log('No internet connection found. App is running in offline mode.')
+    },
+    error (error) {
+      console.error('Error during service worker registration:', error)
+    }
+  })
 }
-export default wb;
+
+// import { Workbox } from "workbox-window";
+// let wb;
+// if ("serviceWorker" in navigator) {
+//   wb = new Workbox(`${process.env.BASE_URL}service-worker.js`);
+//   wb.addEventListener("controlling", () => {
+//     window.location.reload();
+//   });
+//   wb.register();
+// } else {
+//   wb = null;
+// }
+// export default wb;
