@@ -20,6 +20,7 @@ importScripts(
 workbox.core.setCacheNameDetails({prefix: "client"});
 
 self.addEventListener('message', (event) => {
+  console.log("serviceworker has been installed")
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
