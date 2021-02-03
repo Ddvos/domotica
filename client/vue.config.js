@@ -31,7 +31,7 @@ module.exports={
                 src: `/img/logo.svg`,
                 sizes: "144x144",
                 type: "image/svg",
-                purpose: "maskable"
+                purpose: "any"
               },
           ],
         }
