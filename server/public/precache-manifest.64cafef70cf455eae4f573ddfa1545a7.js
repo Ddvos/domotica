@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/css/Raum.css"
   },
   {
-    "revision": "321920e197f9edb9e42d",
+    "revision": "0b68abcd410236c840b1",
     "url": "/css/app.css"
   },
   {
@@ -96,7 +96,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/Raum~carcontrol~caroverview~peterplantenbak'~robeco~signify.js"
   },
   {
-    "revision": "321920e197f9edb9e42d",
+    "revision": "0b68abcd410236c840b1",
     "url": "/js/app.js"
   },
   {
