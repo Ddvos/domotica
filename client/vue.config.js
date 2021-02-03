@@ -18,6 +18,7 @@ module.exports={
         appleMobileWebAppCache: "yes",
         appleMobileWebAppStatusBarStyle: 'black',
         manifestOptions: {
+          description: 'With this app you can control a remote car',
           background_color: "#03566b",
           icons: [
             {
@@ -27,7 +28,7 @@ module.exports={
               purpose: "maskable"
             },
             {
-                src: `/img/logo144.png`,
+                src: `/img/logosmall.png`,
                 sizes: "144x144",
                 type: "image/png",
                 purpose: "maskable"
