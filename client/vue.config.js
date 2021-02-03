@@ -28,9 +28,9 @@ module.exports={
               purpose: "maskable"
             },
             {
-                src: `/img/logo.jpg`,
+                src: `/img/logo.svg`,
                 sizes: "144x144",
-                type: "image/jpg",
+                type: "image/svg",
                 purpose: "maskable"
               },
           ],
