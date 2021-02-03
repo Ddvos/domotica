@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/css/caroverview.css"
   },
   {
-    "revision": "57c2df7d0aac79d5bc00",
+    "revision": "ebde5b41c8a72f355ce1",
     "url": "/css/home.css"
   },
   {
@@ -62,6 +62,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "8e9fcf4deb46d01b1089d7dd7c36917c",
     "url": "/img/headerimage.jpg"
+  },
+  {
+    "revision": "37fb6398db548b48a3f9f77d64bcefe5",
+    "url": "/img/logo.jpg"
   },
   {
     "revision": "9340873be1d02f9374ce25412a9ed6f9",
@@ -116,7 +120,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/chunk-vendors.js"
   },
   {
-    "revision": "57c2df7d0aac79d5bc00",
+    "revision": "ebde5b41c8a72f355ce1",
     "url": "/js/home.js"
   },
   {
@@ -148,7 +152,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/signify.js"
   },
   {
-    "revision": "75588b789b318f88a9230c87105ca6b6",
+    "revision": "5bfc9ffe91007f8c01cd0dffe7a76d35",
     "url": "/manifest.json"
   },
   {

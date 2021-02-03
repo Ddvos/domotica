@@ -16,8 +16,9 @@
       </div>
    </div>
     <div class="livefeed">
-       <img src="../assets/logosmall.png">     
+   
        <img src="../assets/logo.png">  
+       <img src="../assets/logo.jpg">  
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
 
