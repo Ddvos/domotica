@@ -22,6 +22,10 @@ export default {
       this.showUpdateUI = true;
     });
   }
+},
+async accept() {
+  this.showUpdateUI = false;
+  await this.$workbox.messageSW({ type: "SKIP_WAITING" });
 }
 }
 </script>

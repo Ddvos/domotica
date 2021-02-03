@@ -17,7 +17,15 @@ module.exports={
         appleMobileWebAppCache: "yes",
         appleMobileWebAppStatusBarStyle: 'black',
         manifestOptions: {
-          background_color: "#03566b"
+          background_color: "#03566b",
+          icons: [
+            {
+              src: "./src/assets/logo.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "maskable"
+            },
+          ],
         }
       },
 }

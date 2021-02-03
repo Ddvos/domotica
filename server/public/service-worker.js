@@ -14,13 +14,12 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.d883340c5c90e8e923f5f5bd28cfd8cc.js"
+  "/precache-manifest.4ebe29998eb2e84c47e58588839d06b8.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "client"});
 
 self.addEventListener('message', (event) => {
-  console.log("serviceworker has been installed")
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
