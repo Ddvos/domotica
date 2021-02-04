@@ -19,6 +19,7 @@
    
        <img src="../assets/logo.png">  
        <img src="../assets/logo.svg">  
+       <img src="../assets/192.svg">  
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
 

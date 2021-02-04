@@ -25,14 +25,20 @@ module.exports={
               src: `/img/logo.png`,
               sizes: "512x512",
               type: "image/png",
-              purpose: "maskable"
+              purpose: "any"
             },
             {
-                src: `/img/logo.svg`,
-                sizes: "144x144",
-                type: "image/svg",
-                purpose: "any"
-              },
+              src: `/img/logo.svg`,
+              sizes: "144x144",
+              type: "image/svg",
+              purpose: "any"
+            },
+            {
+              src: `/img/logo.svg`,
+              sizes: "192x192",
+              type: "image/svg",
+              purpose: "any"
+            },
           ],
         }
       },
