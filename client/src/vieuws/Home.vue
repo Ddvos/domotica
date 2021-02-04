@@ -17,9 +17,7 @@
    </div>
     <div class="livefeed">
    
-       <img src="../assets/logo.png">  
-       <img src="../assets/logo.svg">  
-       <img src="../assets/192.svg">  
+       
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
 
@@ -63,6 +61,7 @@ export default {
     sendSpeedValue: 0,
     Inactive: true,
     Active: false,
+    internetConnection: false,
     
      
     
@@ -194,6 +193,14 @@ export default {
       },
       connect(){
           this.videoStream()
+
+         this.internetConnection = window.navigator.onLine;
+
+         if ( this.internetConnection) {
+                this.status = "connected to internet"
+            } else {
+                this.status = "No internet"
+            }
       },
        async videoStream(){
 
