@@ -1,5 +1,3 @@
-importScripts("/precache-manifest.abd553bcf930ab8a899aaf8e0d075597.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
-
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 
 // Force development builds
@@ -8,5 +6,4 @@ workbox.setConfig({
     });
     
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
-
 
