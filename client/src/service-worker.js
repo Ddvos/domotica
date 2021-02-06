@@ -5,6 +5,12 @@ workbox.setConfig({
      debug: true 
     });
 
+
+ 
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
+console.log("service-worker from vue is woring!")   
+
 self.addEventListener('activate', evt=>{
 
     evt.waitUntil(
@@ -13,6 +19,3 @@ self.addEventListener('activate', evt=>{
         })
     )
 })
-    
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
-
