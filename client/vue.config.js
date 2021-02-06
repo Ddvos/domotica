@@ -17,13 +17,13 @@ module.exports={
         orientation:  "landscape",
         appleMobileWebAppCache: "yes",
         appleMobileWebAppStatusBarStyle: 'black',
+        workboxPluginMode: 'InjectManifest',
+        workboxOptions: {
+          // swSrc is required in InjectManifest mode.
+          swSrc: 'src/service-worker.js',
+          // ...other Workbox options...
+        },
         manifestOptions: {
-          workboxPluginMode: 'InjectManifest',
-          workboxOptions: {
-            // swSrc is required in InjectManifest mode.
-            swSrc: 'service-worker.js',
-            // ...other Workbox options...
-          },
           description: 'With this app you can control a remote car',
           background_color: "#03566b",
           icons: [

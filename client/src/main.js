@@ -2,10 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import * as Three from 'three'
-import wb from "./registerServiceWorker";
+import "./registerServiceWorker";
 
 Vue.prototype.$three = Three;
-Vue.prototype.$workbox = wb;
+//Vue.prototype.$workbox = wb;
 
 
 //import ToggleButton from 'vue-js-toggle-button'
