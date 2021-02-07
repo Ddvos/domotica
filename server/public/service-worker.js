@@ -16,11 +16,14 @@ self.addEventListener('fetch',function(event){
     console.log("service-worker from vue is working!")   
  })
 
+ //activate event
 self.addEventListener('activate', evt=>{
 
     evt.waitUntil(
         caches.keys().then(keys=>{
-            console.log("keys: "+keys);
+            //console.log("keys: "+keys);
+            return Promise.all(keys.filter(key => key !== staticCacheName)
+            .map(key => caches.delete(key)))
         })
     )
 })
