@@ -9,7 +9,10 @@ workbox.setConfig({
  
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-console.log("service-worker from vue is woring!")   
+
+self.addEventListener('fetch',function(event){
+    console.log("service-worker from vue is woring!")   
+ })
 
 self.addEventListener('activate', evt=>{
 
