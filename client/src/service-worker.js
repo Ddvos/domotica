@@ -9,19 +9,31 @@ workbox.setConfig({
  
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
+let currentCacheNames = Object.assign(
+    { precacheTemp: workbox.core.cacheNames.precache + "-temp" },
+    workbox.core.cacheNames
+  );
+
 
 self.addEventListener('fetch',function(event){
     console.log("service-worker from vue is working!")   
  })
 
- //activate event
-self.addEventListener('activate', evt=>{
-
-    evt.waitUntil(
-        caches.keys().then(keys=>{
-            //console.log("keys: "+keys);
-            return Promise.all(keys.filter(key => key !== staticCacheName)
-            .map(key => caches.delete(key)))
-        })
-    )
-})
+// clean up old SW caches
+self.addEventListener("activate", function(event) {
+    event.waitUntil(
+      caches.keys().then(function(cacheNames) {
+        let validCacheSet = new Set(Object.values(currentCacheNames));
+        return Promise.all(
+          cacheNames
+            .filter(function(cacheName) {
+              return !validCacheSet.has(cacheName);
+            })
+            .map(function(cacheName) {
+              console.log("deleting cache", cacheName);
+              return caches.delete(cacheName);
+            })
+        );
+      })
+    );
+  });
