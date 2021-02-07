@@ -4,7 +4,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 
 // Force development builds
 workbox.setConfig({
-     debug: true 
+     debug: false
     });
 
 
@@ -13,7 +13,7 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 
 self.addEventListener('fetch',function(event){
-    console.log("service-worker from vue is woring!")   
+    console.log("service-worker from vue is working!")   
  })
 
 self.addEventListener('activate', evt=>{
