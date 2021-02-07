@@ -9,6 +9,7 @@ workbox.setConfig({
  
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
+//verzameld alle cachenamen 
 let currentCacheNames = Object.assign(
     { precacheTemp: workbox.core.cacheNames.precache + "-temp" },
     workbox.core.cacheNames
