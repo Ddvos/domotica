@@ -3,7 +3,7 @@
   <div class="row">
     <div class="information" >
       <div class="data">
-        <h4>IP CarV2</h4>
+        <h4>IP Car</h4>
          <ul>
           <li>status: {{status}}</li>
           <li>snelheid: {{speed}}km</li>
