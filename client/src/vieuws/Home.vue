@@ -5,12 +5,12 @@
       <div class="data">
         <h4>IP Car</h4>
          <ul>
-          <li>status: {{status}}</li>
-          <li>snelheid: {{speed}}km</li>
-          <li>accu: {{accu}}%</li>
-          <li>trim: {{trim}}</li>
-          <li>verlichting: {{light}}</li>
-          <li>camera: {{camera}}</li>
+          <li>Status: {{status}}</li>
+          <li>Snelheid: {{speed}}km/h</li>
+          <li>Accu: {{accu}}%</li>
+          <li>Trim: {{trim}}</li>
+          <li>Verlichting: {{light}}</li>
+          <li>Camera: {{camera}}</li>
         </ul>
           <div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
       </div>
@@ -209,7 +209,7 @@ export default {
 
       const config = {
         iceServers: [{
-           urls: 'turn:turn.circusfamilyprojects.nl:3478', //'stun:stun.l.google.com:19302'  turn:178.62.209.37:3478
+           urls: 'turn:turn.stepverder.nl:3478', //'stun:stun.l.google.com:19302'  turn:178.62.209.37:3478
           username: 'Dominique',
            credential: 'WS7Yq_jT'
         }]
