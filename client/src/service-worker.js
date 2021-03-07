@@ -2,7 +2,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 
 // Force development builds
 workbox.setConfig({
-     debug: true
+     debug: false
     });
 
 
