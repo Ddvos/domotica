@@ -29,16 +29,16 @@
 
             
 <script>
-import osc from "osc";
+//import osc from "osc";
 import io from "socket.io-client";
 
 
 
- var port = new osc.WebSocketPort({
-          url: "wss://circusfamilyprojects.nl:8084" // ws://localhost:8083 online server wss://circusfamilyprojects.nl:8084
-        }); 
+//  var port = new osc.WebSocketPort({
+//           url: "wss://circusfamilyprojects.nl:8084" // ws://localhost:8083 online server wss://circusfamilyprojects.nl:8084
+//         }); 
 
- port.open();
+//  port.open();
 
  //connect to server
 let ipcar = io.connect("https://stepverder.nl:6500") // poort to connect with

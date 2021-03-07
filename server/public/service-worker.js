@@ -1,4 +1,4 @@
-importScripts("/precache-manifest.b3b23181cddf789bbe6d8ff1ae757c71.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/precache-manifest.ec6a82581e3944b85f7cabd030cf73d0.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 
@@ -19,7 +19,7 @@ let currentCacheNames = Object.assign(
 
 
 self.addEventListener('fetch',function(event){
-    console.log("service-worker from vue is working!")   
+    //console.log("service-worker from vue is working!")   
  })
 
 // clean up old SW caches
@@ -33,7 +33,7 @@ self.addEventListener("activate", function(event) {
               return !validCacheSet.has(cacheName);
             })
             .map(function(cacheName) {
-              console.log("deleting cache", cacheName);
+              //console.log("deleting cache", cacheName);
               return caches.delete(cacheName);
             })
         );

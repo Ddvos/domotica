@@ -17,7 +17,7 @@ let currentCacheNames = Object.assign(
 
 
 self.addEventListener('fetch',function(event){
-    console.log("service-worker from vue is working!")   
+    //console.log("service-worker from vue is working!")   
  })
 
 // clean up old SW caches
@@ -31,7 +31,7 @@ self.addEventListener("activate", function(event) {
               return !validCacheSet.has(cacheName);
             })
             .map(function(cacheName) {
-              console.log("deleting cache", cacheName);
+              //console.log("deleting cache", cacheName);
               return caches.delete(cacheName);
             })
         );
