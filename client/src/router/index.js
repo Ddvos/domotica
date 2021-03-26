@@ -24,6 +24,11 @@ export default new Router({
             component:() => import(/* webpackChunkName: "home" */ '@/vieuws/Home'),
         },
         {
+            path:'/jean',
+            name: '/Jean',
+            component:() => import(/* webpackChunkName: "home" */ '@/vieuws/Jean'),
+        },
+        {
             path:'/broadcast/:id',
             name: '/Broadcast',
             component:() => import(/* webpackChunkName: "broadcast" */ '@/vieuws/Broadcast'),
