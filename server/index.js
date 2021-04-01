@@ -428,6 +428,74 @@ userCountserver.listen(6583,() => console.log('vister counter RAUM is listening 
 
 /// einde registratie bezoekers
 
+///////////////////////////////////////
+  // RPLidar sensor (school project)
+//////////////////////////////
+
+const userCountserver = http.createServer(app);
+const io = require("socket.io")(userCountserver); 
+
+const raumRooms = ["clientRoom"]
+
+io.on("connection",(socket)=>{
+ //var room = io.sockets.adapter.rooms[''];
+  socket.emit("welcome", "Hello and welcome to the RPlidar sensor socket.io");
+
+  // incoming data from controller
+
+  
+    socket.on("controllerInput",(controllerData)=>{
+      //console.log(controllerData)
+      io.emit("inputRaspberrypi", controllerData);
+       // deze data is van de controller en gaat naar de Raspberry pi om de auto aan te sturen
+      
+    });
+
+  socket.on("joinIPcar",(room)=>{
+    if(raumRooms.includes(room)){
+       socket.join(room);
+       io.of("/ipcar").to(room).emit("newUser", "new visistor has joined the room " + room)  //melding nieuwe deelnemer
+
+       io.of('/ipcar').in(room).clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
+         if (error) throw error;
+         io.of("/ipcar").to(room).emit("clientList", clients)  // sends/emits a array with all the clients
+        // console.log(clients); // => [Anw2LatarvGVVXEIAAAD]
+       });
+     
+       /// enf of code get all users in room
+
+       return socket.emit("succes","You have succesfully joined the room " + room);
+    }else{
+      return socket.emit("err","Error: No room named " + room);
+    }
+ });
+
+
+
+  //socket.disconnect();
+    socket.on('disconnect', (reason) => {
+  //    io.of('/ipcar').in("clientRoom").clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
+  //      if (error) throw error;
+  //      io.of("/ipcar").to("clientRoom").emit("clientList", clients)  // sends/emits a array with all the clients
+
+  //       // => [Anw2LatarvGVVXEIAAAD]
+
+  //        // maakt verbinidng met deze server en stuurt via OSC de huidige lijst met klanten naar de studio in amsterdam
+  //     //console.log('user disconnected');
+  //    });
+
+     console.log("Car Disconnect: " + reason);
+ });
+});  
+
+
+
+
+
+userCountserver.listen(6683,() => console.log('vister counter RAUM is listening on port: 6500'))
+
+
+// rplidar sensor school project
 
 
 // end OSC websocket 
