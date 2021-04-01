@@ -432,8 +432,8 @@ userCountserver.listen(6583,() => console.log('vister counter RAUM is listening 
   // RPLidar sensor (school project)
 //////////////////////////////
 
-const userCountserver = http.createServer(app);
-const io = require("socket.io")(userCountserver); 
+const rplidarserver = http.createServer(app);
+const io = require("socket.io")(rplidarserver); 
 
 const raumRooms = ["clientRoom"]
 
@@ -492,7 +492,7 @@ io.on("connection",(socket)=>{
 
 
 
-userCountserver.listen(6683,() => console.log('vister counter RAUM is listening on port: 6500'))
+rplidarserver.listen(6683,() => console.log('vister counter RAUM is listening on port: 6500'))
 
 
 // rplidar sensor school project
