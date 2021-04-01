@@ -433,11 +433,11 @@ userCountserver.listen(6583,() => console.log('vister counter RAUM is listening 
 //////////////////////////////
 
 const rplidarserver = http.createServer(app);
-const io = require("socket.io")(rplidarserver); 
+const lidarIO = require("socket.io")(rplidarserver); 
 
-const raumRooms = ["clientRoom"]
+const lidarRooms = ["clientRoom"]
 
-io.on("connection",(socket)=>{
+lidarIO.on("connection",(socket)=>{
  //var room = io.sockets.adapter.rooms[''];
   socket.emit("welcome", "Hello and welcome to the RPlidar sensor socket.io");
 
@@ -446,19 +446,19 @@ io.on("connection",(socket)=>{
   
     socket.on("controllerInput",(controllerData)=>{
       //console.log(controllerData)
-      io.emit("inputRaspberrypi", controllerData);
+      lidarIO.emit("inputRaspberrypi", controllerData);
        // deze data is van de controller en gaat naar de Raspberry pi om de auto aan te sturen
       
     });
 
   socket.on("joinIPcar",(room)=>{
-    if(raumRooms.includes(room)){
+    if(lidarRooms.includes(room)){
        socket.join(room);
-       io.of("/ipcar").to(room).emit("newUser", "new visistor has joined the room " + room)  //melding nieuwe deelnemer
+       lidarIO.of("/ipcar").to(room).emit("newUser", "new visistor has joined the room " + room)  //melding nieuwe deelnemer
 
-       io.of('/ipcar').in(room).clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
+       lidarIO.of('/ipcar').in(room).clients((error, clients) => { // get all the clients which are connected with the room: clientRoom
          if (error) throw error;
-         io.of("/ipcar").to(room).emit("clientList", clients)  // sends/emits a array with all the clients
+         lidarIO.of("/ipcar").to(room).emit("clientList", clients)  // sends/emits a array with all the clients
         // console.log(clients); // => [Anw2LatarvGVVXEIAAAD]
        });
      
