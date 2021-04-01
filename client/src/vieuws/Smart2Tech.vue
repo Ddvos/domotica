@@ -41,6 +41,7 @@ export default {
   return{
     
     status: 0,
+    lidarData: null,
     statusButton: "connect",
     speed: 0,
     accu: 0,
@@ -171,7 +172,10 @@ export default {
         }
       console.log( this.xAxesLeft)
         ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
-      //console.log( this.Kruisje);
+
+       ipcar.on("inputLidar",(incomingdata)=>{
+          console.log(incomingdata)
+        })
        
 
         }

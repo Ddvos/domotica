@@ -443,10 +443,10 @@ lidarIO.on("connection",(socket)=>{
 
   // incoming data from controller
 
-  
-    socket.on("controllerInput",(controllerData)=>{
+     // send data from raspberrypi naar webpagina
+    socket.on("lidardata",(incomingLidarData)=>{
       //console.log(controllerData)
-      lidarIO.emit("inputRaspberrypi", controllerData);
+      lidarIO.emit("inputLidar", incomingLidarData);
        // deze data is van de controller en gaat naar de Raspberry pi om de auto aan te sturen
       
     });
