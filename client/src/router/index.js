@@ -38,12 +38,7 @@ export default new Router({
             path:'/livestream',
             name: '/Livestream',
             component:() => import(/* webpackChunkName: "livestream" */ '@/vieuws/Broadcast'),
-        },    
-        // {
-        //     path:'/smart2Tech',
-        //     name: '/smart2Tech',
-        //     component:() => import(/* webpackChunkName: "livestream" */ '@/vieuws/Smart2Tech'),
-        // },   
+        },       
         
 
     ]

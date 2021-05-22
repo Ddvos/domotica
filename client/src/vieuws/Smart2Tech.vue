@@ -53,6 +53,7 @@ export default {
     Inactive: true,
     Active: false,
     internetConnection: false,
+    fakedata:[],
     
      
     
@@ -89,9 +90,10 @@ export default {
 
         //ipcar.emit("joinIPcar", "clientRoom");
 
-        ipcar.on("newUser",(res) =>{
-          console.log(res)
-
+        ipcar.on("inputLidar",(incomingdata)=>{
+          
+          this.fakedata.push([incomingdata[0],incomingdata[0]])
+          console.log(this.fakedata)
         })
 
         ipcar.on("disconnect"),(res)=>{

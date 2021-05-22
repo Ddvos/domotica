@@ -1,9 +1,9 @@
 <template>
 <div class="background" ref="mouseEvent">
-  <div class="row">
+  <div class="row" v-if="desktop">
     <div class="information" >
       <div class="data">
-        <h4>IP Car V2</h4>
+        <h4>IP Car V3 Desktop</h4>
          <ul>
           <li>Status: {{status}}</li>
           <li>Snelheid: {{speed}}km/h</li>
@@ -22,6 +22,29 @@
     </div>
 
  </div>
+  <div class="row" v-if="mobile">
+    <div class="information" >
+      <div class="data">
+        <h4 class="namecar">IP car</h4><div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
+         <ul>
+          <li>Status: {{status}}</li>
+          <li>Snelheid: {{speed}}km/h</li>
+          <li>Accu: {{accu}}%</li>
+          <li>Trim: {{trim}}</li>
+          <li>Verlichting: {{light}}</li>
+          <li>Camera: {{camera}}</li>
+        </ul>
+        
+      </div>
+   </div>
+    <div class="livefeed">
+   
+       
+        <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
+    </div>
+     <Joystick1 class="joystick1" @change="handleChange('left', $event);"/>
+
+ </div>
 </div>
   
 </template>
@@ -31,7 +54,7 @@
 <script>
 //import osc from "osc";
 import io from "socket.io-client";
-
+import Joystick1 from '../components/joystick';
 
 
 //  var port = new osc.WebSocketPort({
@@ -62,10 +85,16 @@ export default {
     Inactive: true,
     Active: false,
     internetConnection: false,
+    desktop: true,
+    mobile: false,
     
      
     
   }},
+    components: {
+  'Joystick1': Joystick1,
+  
+  },
    created: function(){
            
        this.gameController()  
@@ -77,7 +106,21 @@ export default {
        this.$refs.mouseEvent.addEventListener('touchmove',(event) =>{
           event.preventDefault();
           event.stopImmediatePropagation();
+         // this.setMobiletouch(event);
         },{ passive: false });
+
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+          // true for mobile device
+          console.log("mobile device");
+         this.mobile =true;
+         this.desktop = false;
+         
+        }else{
+          // false for not mobile device
+          console.log("not mobile device");
+        this.mobile =false;
+         this.desktop = true;
+        }
 
     },
   computed: {
@@ -129,6 +172,12 @@ export default {
           
 
       },
+      //setMobiletouch(event){
+
+         // this.mouseX = touch.clientX;
+         // this.mouseY = touch.clientY;
+
+     // },
       inputController(){
 
         const gamepads = navigator.getGamepads()
@@ -179,7 +228,7 @@ export default {
         }else if(this.reverse <1499 &&  this.speed >1501){
            this.sendSpeedValue = 1500; // voor en achteruit tegelijk is 0
         }
-      console.log( this.xAxesLeft)
+      //console.log( this.xAxesLeft)
         ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
       //console.log( this.Kruisje);
        
@@ -371,7 +420,7 @@ export default {
   text-align: left;
   width: 100%;
   height: 100vh;
-  background-color: #1e3a42;
+  background-color: #1e3a4291;
   padding: 12px;
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
@@ -379,6 +428,9 @@ export default {
 }
 h4{
    margin-bottom: 5px;
+}
+.namecar{
+  display: inline;
 }
 
 ul {
@@ -393,6 +445,7 @@ ul {
    z-index: 1;
 }
 
+
 .ButtonInactive{
   background-color: rgba(214, 13, 6, 0.5);
   font-size: 100%;
@@ -400,9 +453,11 @@ ul {
   border-radius: 5px;
 	width: 95px;
 	padding: 10px 0;
+  margin-left: 10px;
 	text-align: center;
 	display: inline-block;
   margin-right: 10px;
+  display: inline;
 }
    .ButtonInactive :hover{
      background-color: rgba(184, 46, 46, 0.5)
