@@ -403,6 +403,7 @@ export default {
   width: 100vw;
   height: 100vh;
   background: #1e3a42;
+  overflow-x: hidden
   
 }
 
@@ -445,6 +446,16 @@ ul {
    z-index: 1;
 }
 
+.controlls{
+  position: absolute;
+  width: 5vw;
+  height:5vh;
+  margin-left:5%;
+  margin-top:28%;
+  z-index:1;
+  transform: scale(0.5);
+  
+}
 
 .ButtonInactive{
   background-color: rgba(214, 13, 6, 0.5);

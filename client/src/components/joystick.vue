@@ -1,16 +1,16 @@
-<template>   
-  <div class="controlls">
-      <div
-        class="vue-joystick"
-        :style="style"
-        @touchmove="handleTouch"
-        @mousemove="handleMove"
-        @mousedown="handleStart"
-        @mouseup="handleRelease"
-        @touchend="handleRelease"
+
+<template>
+<div class="controls">
+  <div
+    class="vue-joystick"
+    :style="style"
+    @touchmove="handleTouch"
+    @mousemove="handleMove"
+    @mousedown="handleStart"
+    @mouseup="handleRelease"
+    @touchend="handleRelease"
   ></div>
-    </div>
-   
+  </div>
 </template>
 <script>
 export default {
@@ -32,8 +32,8 @@ export default {
   computed: {
     style() {
       return {
-        "--x": `${this.x + 100}px`,
-        "--y": `${this.y + 100}px`,
+        "--x": `${this.x + 128}px`,
+        "--y": `${this.y + 128}px`,
         "--speed": `${this.speed}px`,
         "--angle": `${this.angle}deg`,
         "--color": `${this.color}`
@@ -47,8 +47,8 @@ export default {
     handleTouch({ touches: [touch] }) {
       const { clientX, clientY } = touch;
       const { offsetLeft, offsetTop } = this.$el;
-      const x = Math.round(clientX - offsetLeft - 100);
-      const y = Math.round(clientY - offsetTop - 100);
+      const x = Math.round(clientX - offsetLeft - 128);
+      const y = Math.round(clientY - offsetTop - 128);
       this.updatePosition(x, y);
     },
     handleMove({ clientX, clientY }) {
@@ -56,8 +56,8 @@ export default {
         return;
       }
       const { offsetLeft, offsetTop } = this.$el;
-      const x = Math.round(clientX - offsetLeft - 62);
-      const y = Math.round(clientY - offsetTop - 62);
+      const x = Math.round(clientX - offsetLeft - 128);
+      const y = Math.round(clientY - offsetTop - 128);
       this.updatePosition(x, y);
     },
     handleRelease() {
@@ -92,8 +92,8 @@ export default {
   }
 };
 </script>
-<style scoped>
-.controlls{
+<style>
+.controls{
   position: absolute;
   width: 5vw;
   height:5vh;
@@ -120,7 +120,7 @@ export default {
 .vue-joystick::before {
   left: 0;
   right: 0;
-  margin: -16px;
+  margin: -32px;
   background: var(--color);
   height: 64px;
   width: 64px;
