@@ -42,7 +42,7 @@
        
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
-     <Joystick1 class="joystick1" @change="handleChange('left', $event);"/>
+     <!-- <Joystick1 class="joystick1" @change="handleChange('left', $event);"/> -->
 
  </div>
 </div>
@@ -54,7 +54,7 @@
 <script>
 //import osc from "osc";
 import io from "socket.io-client";
-import Joystick1 from '../components/joystick';
+// import Joystick1 from '../components/joystick';
 
 
 //  var port = new osc.WebSocketPort({
@@ -92,7 +92,7 @@ export default {
     
   }},
     components: {
-  'Joystick1': Joystick1,
+  // 'Joystick1': Joystick1,
   
   },
    created: function(){
