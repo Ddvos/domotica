@@ -1,8 +1,7 @@
 
 <template>
 <div class="controls">
-  <div
-    class="vue-joystick"
+  <div class="vue-joystick"
     :style="style"
     @touchmove="handleTouch"
     @mousemove="handleMove"
@@ -32,8 +31,8 @@ export default {
   computed: {
     style() {
       return {
-        "--x": `${this.x + 128}px`,
-        "--y": `${this.y + 128}px`,
+        "--x": `${this.x + 64}px`,
+        "--y": `${this.y + 64}px`,
         "--speed": `${this.speed}px`,
         "--angle": `${this.angle}deg`,
         "--color": `${this.color}`
@@ -47,8 +46,9 @@ export default {
     handleTouch({ touches: [touch] }) {
       const { clientX, clientY } = touch;
       const { offsetLeft, offsetTop } = this.$el;
-      const x = Math.round(clientX - offsetLeft - 128);
-      const y = Math.round(clientY - offsetTop - 128);
+  
+      const x = Math.round(clientX - offsetLeft -64);
+      const y = Math.round(clientY - offsetTop - 64);
       this.updatePosition(x, y);
     },
     handleMove({ clientX, clientY }) {
@@ -56,8 +56,8 @@ export default {
         return;
       }
       const { offsetLeft, offsetTop } = this.$el;
-      const x = Math.round(clientX - offsetLeft - 128);
-      const y = Math.round(clientY - offsetTop - 128);
+      const x = Math.round(clientX - offsetLeft - 64);
+      const y = Math.round(clientY - offsetTop - 64);
       this.updatePosition(x, y);
     },
     handleRelease() {
@@ -66,7 +66,7 @@ export default {
       this.updatePosition(0, 0);
     },
     updatePosition(x, y) {
-      const offset = 128 - 32;
+      const offset = 64 - 16;
       const radians = Math.atan2(y, x);
       const angle = Math.round((radians * 180) / Math.PI, 4);
       this.angle = angle + (angle > 90 ? -270 : 90);
@@ -101,14 +101,14 @@ export default {
   margin-left:5%;
   margin-top:28%;
   z-index:1;
-  transform: scale(0.5);
+  transform: scale(1);
   
 }
 .vue-joystick {
   display: inline-block;
   background: white;
-  height: 256px;
-  width: 256px;
+  height: 128px;
+  width: 128px;
   border-radius: 50%;
   position: relative;
   border: solid 4px var(--color);
@@ -121,18 +121,18 @@ export default {
 .vue-joystick::before {
   left: 0;
   right: 0;
-  margin: -32px;
+  margin: -16px;
   background: var(--color);
-  height: 64px;
-  width: 64px;
+  height: 32px;
+  width: 32px;
   border-radius: 50%;
   transform: translateX(var(--x)) translateY(var(--y));
 }
 .vue-joystick::after {
-  left: 126px;
-  bottom: 128px;
-  border-radius: 10px;
-  width: 4px;
+  left: 63px;
+  bottom: 64px;
+  border-radius: 5px;
+  width: 2px;
   background: var(--color);
   transform: rotate(var(--angle));
   transform-origin: bottom center;

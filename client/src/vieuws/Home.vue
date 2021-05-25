@@ -470,6 +470,7 @@ ul {
   
 }
 
+
 .ButtonInactive{
   background-color: rgba(214, 13, 6, 0.5);
   font-size: 100%;
