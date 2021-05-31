@@ -43,7 +43,7 @@
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
     <Joystick1 class="joystick1" @change="handleChange('left', $event);" /> 
-
+    <Joystick2 class="joystick2" @change="handleChange('right', $event);" />   
  </div>
 </div>
   
@@ -55,6 +55,7 @@
 //import osc from "osc";
 import io from "socket.io-client";
 import Joystick1 from '../components/joystick';
+import Joystick2 from '../components/joystick';
 
 
 //  var port = new osc.WebSocketPort({
@@ -93,6 +94,12 @@ export default {
         speed: 0,
         angle: 0
       },
+     rightStick: {
+        x: 0,
+        y: 0,
+        speed: 0,
+        angle: 0
+      },
     metaInfo: {
       meta: [
         { charset: 'utf-8' },
@@ -105,6 +112,7 @@ export default {
   }},
     components: {
      'Joystick1': Joystick1,
+     'Joystick2': Joystick2,
   
   },
    created: function(){
@@ -192,24 +200,35 @@ export default {
      // },
     handleChange(id, { x, y, speed, angle }) {
         const stick = this[`${id}Stick`];
-        stick.x = x;
-        stick.y = y;
+       
+       
         stick.speed = speed;
         stick.angle = angle;
 
-        this.speed = this.map(stick.y,48,-48,1400,1600);  //R2
-        this.xAxesLeft = this.map(stick.x,-48,48,500,2500); //x as linkerkant sturen
+       if(id== "right"){
+          stick.y = y;
+          this.speed = this.map(stick.y,48,-48,1400,1600);  //R2
 
-         // function zodat je niet kan remmen en gas geven tegelijk
-        if( this.speed >1501){
-            this.sendSpeedValue =this.speed // send voorruit rijden
-        } else if(this.reverse <1501){
-            this.sendSpeedValue = this.reverse // send achteruit rijden
-        }else if(this.reverse <1499 &&  this.speed >1501){
-           this.sendSpeedValue = 1500; // voor en achteruit tegelijk is 0
-        }
+          // function zodat je niet kan remmen en gas geven tegelijk
+          if( this.speed >1501){
+              this.sendSpeedValue =this.speed // send voorruit rijden
+          } else if(this.reverse <1501){
+              this.sendSpeedValue = this.reverse // send achteruit rijden
+          }else if(this.reverse <1499 &&  this.speed >1501){
+            this.sendSpeedValue = 1500; // voor en achteruit tegelijk is 0
+          }
+       }
+       if(id== "left"){
+          stick.x = x;
+         this.xAxesLeft = this.map(stick.x,-48,48,500,2500); //x as linkerkant sturen
+       }
+
+        
+        
+
+       
         if( this.mobile== true){
-         //console.log(  this.speed)
+         console.log(  this.xAxesLeft)
           ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
         }
       },
@@ -481,14 +500,26 @@ ul {
    z-index: 1;
 }
 
-.controlls{
+.joystick1{
   position: absolute;
   width: 5vw;
   height:5vh;
   margin-left:5%;
   margin-top:28%;
   z-index:1;
-  transform: scale(0.5);
+  transform: scale(1);
+
+  
+}
+
+.joystick2{
+  position: absolute;
+  width: 5vw;
+  height:5vh;
+  margin-left:80%;
+  margin-top:28%;
+  z-index:2;
+  transform: scale(1);
   
 }
 

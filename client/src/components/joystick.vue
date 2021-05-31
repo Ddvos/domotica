@@ -76,7 +76,7 @@ export default {
       );
       this.x = this.speed > offset ? Math.cos(radians) * offset : x;
       this.y = this.speed >= offset ? Math.sin(radians) * offset : y;
-      // console.log(this.x)
+      //console.log(this.x)
       this.emitAll();
     },
     emitAll(name = "change") {
@@ -94,19 +94,10 @@ export default {
 };
 </script>
 <style>
-.controls{
-  position: absolute;
-  width: 5vw;
-  height:5vh;
-  margin-left:5%;
-  margin-top:28%;
-  z-index:1;
-  transform: scale(1);
-  
-}
+
 .vue-joystick {
   display: inline-block;
-  background: white;
+  background: rgba(255, 255, 255, 0.5);
   height: 128px;
   width: 128px;
   border-radius: 50%;
