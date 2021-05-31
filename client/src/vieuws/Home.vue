@@ -8,8 +8,8 @@
           <li>Status: {{status}}</li>
           <li>Snelheid: {{speed}}km/h</li>
           <li>Accu: {{accu}}%</li>
-          <li>Trim: {{trim}}</li>
-          <li>Verlichting: {{light}}</li>
+          <!-- <li>Trim: {{trim}}</li>
+          <li>Verlichting: {{light}}</li> -->
           <li>Camera: {{camera}}</li>
         </ul>
           <div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
@@ -31,8 +31,8 @@
           <li>Snelheid: {{speed}}km/h</li>
           <li>Accu: {{accu}}%</li>
           <li>Trim: {{trim}}</li>
-          <li>Verlichting: {{light}}</li>
-          <li>Camera: {{camera}}</li>
+          <!-- <li>Verlichting: {{light}}</li>
+          <li>Camera: {{camera}}</li> -->
         </ul>
         
       </div>

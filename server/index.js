@@ -484,7 +484,7 @@ lidarIO.on("connection",(socket)=>{
   //     //console.log('user disconnected');
   //    });
 
-     console.log("Car Disconnect: " + reason);
+     console.log("Lidar Disconnect: " + reason);
  });
 });  
 
