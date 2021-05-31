@@ -229,7 +229,7 @@ export default {
        
         if( this.mobile== true){
          console.log(  this.xAxesLeft)
-          ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
+         // ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
         }
       },
       inputController(){
@@ -268,8 +268,8 @@ export default {
    
 
          // maping speed to km/h
-          this.speed = this.map(gamepads[0].buttons[7].value,0,1,1500,1600);  //R2
-          this.reverse = this.map(gamepads[0].buttons[6].value,0,1,1500,1400);  //L2
+          this.speed = this.map(gamepads[0].buttons[7].value,0,1,1500,1750);  //R2
+          this.reverse = this.map(gamepads[0].buttons[6].value,0,1,1500,1350);  //L2
           this.xAxesLeft = this.map(gamepads[0].axes[0],-1,1,500,2500); //x as linkerkant
         //  this.BL = gamepads[0].buttons[14].value;  //Button left
         //  this.BR = gamepads[0].buttons[15].value;  //Button right
