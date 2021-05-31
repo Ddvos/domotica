@@ -76,7 +76,7 @@ export default {
       );
       this.x = this.speed > offset ? Math.cos(radians) * offset : x;
       this.y = this.speed >= offset ? Math.sin(radians) * offset : y;
-      console.log(this.x)
+      // console.log(this.x)
       this.emitAll();
     },
     emitAll(name = "change") {

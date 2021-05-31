@@ -42,7 +42,7 @@
        
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
-    <Joystick1 class="joystick1" /> 
+    <Joystick1 class="joystick1" @change="handleChange('left', $event);" /> 
 
  </div>
 </div>
@@ -87,6 +87,12 @@ export default {
     internetConnection: false,
     desktop: true,
     mobile: false,
+    leftStick: {
+        x: 0,
+        y: 0,
+        speed: 0,
+        angle: 0
+      },
     metaInfo: {
       meta: [
         { charset: 'utf-8' },
@@ -190,6 +196,22 @@ export default {
         stick.y = y;
         stick.speed = speed;
         stick.angle = angle;
+
+        this.speed = this.map(stick.y,48,-48,1400,1600);  //R2
+        this.xAxesLeft = this.map(stick.x,-48,48,500,2500); //x as linkerkant sturen
+
+         // function zodat je niet kan remmen en gas geven tegelijk
+        if( this.speed >1501){
+            this.sendSpeedValue =this.speed // send voorruit rijden
+        } else if(this.reverse <1501){
+            this.sendSpeedValue = this.reverse // send achteruit rijden
+        }else if(this.reverse <1499 &&  this.speed >1501){
+           this.sendSpeedValue = 1500; // voor en achteruit tegelijk is 0
+        }
+        if( this.mobile== true){
+         //console.log(  this.speed)
+          ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
+        }
       },
       inputController(){
 
