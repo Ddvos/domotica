@@ -1,14 +1,17 @@
 
 <template>
 <div class="controls">
-  <div class="vue-joystick"
+  <div class="vue-joystick"  ref="touchevent"
     :style="style"
-    @touchmove="handleTouch"
+    
     @mousemove="handleMove"
     @mousedown="handleStart"
     @mouseup="handleRelease"
     @touchend="handleRelease"
-  ></div>
+  >
+  <li>linksX: {{this.linksX}}</li>
+  <li>rightX: {{rechtsX}}</li>
+  </div>
   </div>
 </template>
 <script>
@@ -25,7 +28,10 @@ export default {
       y: 0,
       angle: 0,
       speed: 0,
-      isMouseDown: false
+      isMouseDown: false,
+      linksX: 0,
+      linksY: 0,
+      rechtsX:0,
     };
   },
   computed: {
@@ -43,13 +49,28 @@ export default {
     handleStart() {
       this.isMouseDown = true;
     },
-    handleTouch({ touches: [touch] }) {
-      const { clientX, clientY } = touch;
+    handleTouch( evt) {
+      var touches = evt.changedTouches;
+         for (var i = 0; i < touches.length; i++) {
+            
+            if(i==0){
+             this.linksX= touches[i].clientX
+              this.linksY= touches[i].clientY
+              //console.log( this.linksY)
+            }  
+            if(i==1){
+             this.rechtsX= touches[i].clientX
+             
+            }  
+          }
+      //const { clientX, clientY } = touches;
       const { offsetLeft, offsetTop } = this.$el;
   
-      const x = Math.round(clientX - offsetLeft -64);
-      const y = Math.round(clientY - offsetTop - 64);
+      const x = Math.round(this.linksX - offsetLeft -64);
+      const y = Math.round(this.linksY - offsetTop - 64);
       this.updatePosition(x, y);
+  //  console.log(this.$el)
+     
     },
     handleMove({ clientX, clientY }) {
       if (!this.isMouseDown) {
@@ -76,7 +97,7 @@ export default {
       );
       this.x = this.speed > offset ? Math.cos(radians) * offset : x;
       this.y = this.speed >= offset ? Math.sin(radians) * offset : y;
-      //console.log(this.x)
+      //console.log(this.y)
       this.emitAll();
     },
     emitAll(name = "change") {
@@ -89,6 +110,14 @@ export default {
     }
   },
   mounted() {
+    
+    this.$refs.touchevent.addEventListener("touchstart",(event)=>{this.handleStart(event)}, false);
+    this.$refs.touchevent.addEventListener("touchend",(event)=>{this.handleRelease(event)} , false);
+    this.$refs.touchevent.addEventListener("touchcancel",(event)=>{this.handleCancel(event)}, false);
+    this.$refs.touchevent.addEventListener("touchleave",(event)=>{ this.handleEnd(event)}, false);
+    this.$refs.touchevent.addEventListener("touchmove",(event)=>{ this.handleTouch(event)}, false);
+    console.log("initialized.");
+
     this.emitAll();
   }
 };

@@ -45,7 +45,7 @@
     <Joystick1 class="joystick1" @change="handleChange('left', $event);" /> 
     <Joystick2 class="joystick2" @change="handleChange('right', $event);" />
 
-    <MultiTouch  class="multitouch"/>      
+    <!-- <MultiTouch  class="multitouch"/>       -->
  </div>
 </div>
   
@@ -58,7 +58,7 @@
 import io from "socket.io-client";
 import Joystick1 from '../components/joystick';
 import Joystick2 from '../components/joystick';
-import MultiTouch from '../components/multitouch';
+// import MultiTouch from '../components/multitouch';
 
 //  var port = new osc.WebSocketPort({
 //           url: "wss://circusfamilyprojects.nl:8084" // ws://localhost:8083 online server wss://circusfamilyprojects.nl:8084
@@ -115,7 +115,7 @@ export default {
     components: {
      'Joystick1': Joystick1,
      'Joystick2': Joystick2,
-     'MultiTouch': MultiTouch,
+    //  'MultiTouch': MultiTouch,
      
   
   },
@@ -232,7 +232,7 @@ export default {
 
        
         if( this.mobile== true){
-         console.log(  this.xAxesLeft)
+         //console.log(  this.xAxesLeft)
          // ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
         }
       },
