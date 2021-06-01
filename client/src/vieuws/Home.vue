@@ -43,7 +43,9 @@
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
     <Joystick1 class="joystick1" @change="handleChange('left', $event);" /> 
-    <Joystick2 class="joystick2" @change="handleChange('right', $event);" />   
+    <Joystick2 class="joystick2" @change="handleChange('right', $event);" />
+
+    <MultiTouch  class="multitouch"/>      
  </div>
 </div>
   
@@ -56,7 +58,7 @@
 import io from "socket.io-client";
 import Joystick1 from '../components/joystick';
 import Joystick2 from '../components/joystick';
-
+import MultiTouch from '../components/multitouch';
 
 //  var port = new osc.WebSocketPort({
 //           url: "wss://circusfamilyprojects.nl:8084" // ws://localhost:8083 online server wss://circusfamilyprojects.nl:8084
@@ -113,6 +115,8 @@ export default {
     components: {
      'Joystick1': Joystick1,
      'Joystick2': Joystick2,
+     'MultiTouch': MultiTouch,
+     
   
   },
    created: function(){
@@ -519,6 +523,17 @@ ul {
   margin-left:80%;
   margin-top:28%;
   z-index:2;
+  transform: scale(1);
+  
+}
+
+.multitouch{
+  position: absolute;
+  width: 5vw;
+  height:5vh;
+  margin-left:60%;
+  margin-top:15%;
+  z-index:3;
   transform: scale(1);
   
 }
