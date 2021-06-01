@@ -233,7 +233,7 @@ export default {
        
         if( this.mobile== true){
          //console.log(  this.xAxesLeft)
-         // ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
+          ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
         }
       },
       inputController(){

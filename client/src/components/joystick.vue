@@ -9,8 +9,6 @@
     @mouseup="handleRelease"
     @touchend="handleRelease"
   >
-  <li>linksX: {{this.linksX}}</li>
-  <li>rightX: {{rechtsX}}</li>
   </div>
   </div>
 </template>
@@ -51,18 +49,11 @@ export default {
     },
     handleTouch( evt) {
       var touches = evt.changedTouches;
-         for (var i = 0; i < touches.length; i++) {
-            
-            if(i==0){
-             this.linksX= touches[i].clientX
-              this.linksY= touches[i].clientY
+      
+             this.linksX= touches[0].clientX
+              this.linksY= touches[0].clientY
               //console.log( this.linksY)
-            }  
-            if(i==1){
-             this.rechtsX= touches[i].clientX
-             
-            }  
-          }
+      
       //const { clientX, clientY } = touches;
       const { offsetLeft, offsetTop } = this.$el;
   
