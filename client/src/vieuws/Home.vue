@@ -211,16 +211,7 @@ export default {
 
        if(id== "right"){
           stick.y = y;
-          this.speed = this.map(stick.y,48,-48,1400,1600);  //R2
-
-          // function zodat je niet kan remmen en gas geven tegelijk
-          if( this.speed >1501){
-              this.sendSpeedValue =this.speed // send voorruit rijden
-          } else if(this.reverse <1501){
-              this.sendSpeedValue = this.reverse // send achteruit rijden
-          }else if(this.reverse <1499 &&  this.speed >1501){
-            this.sendSpeedValue = 1500; // voor en achteruit tegelijk is 0
-          }
+          this.speed = this.map(stick.y,48,-48,1350,1650);  //R2      
        }
        if(id== "left"){
           stick.x = x;
@@ -232,8 +223,8 @@ export default {
 
        
         if( this.mobile== true){
-         //console.log(  this.xAxesLeft)
-          ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
+         //console.log(this.speed)
+          ipcar.emit("controllerInput", [this.xAxesLeft,this.speed ]);
         }
       },
       inputController(){
