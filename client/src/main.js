@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import * as Three from 'three'
 import "./registerServiceWorker";
+import ToggleButton from 'vue-js-toggle-button'
 
 Vue.prototype.$three = Three;
 //Vue.prototype.$workbox = wb;
@@ -12,7 +13,7 @@ Vue.prototype.$three = Three;
 import { VueHammer } from 'vue2-hammer'
 
 
-Vue.use(VueHammer)
+Vue.use(VueHammer, ToggleButton)
 
 
 Vue.config.productionTip = false

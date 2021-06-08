@@ -31,6 +31,8 @@
           <li>Snelheid: {{speed}}km/h</li>
           <li>Accu: {{accu}}%</li>
           <li>Trim: {{trim}}</li>
+          <li><input type="checkbox" id="checkbox" v-model="touchState">
+              <label for="checkbox">Touch control: {{ touchState }}</label></li>
           <!-- <li>Verlichting: {{light}}</li>
           <li>Camera: {{camera}}</li> -->
         </ul>
@@ -90,6 +92,7 @@ export default {
     internetConnection: false,
     desktop: true,
     mobile: false,
+    touchState: false,
     leftStick: {
         x: 0,
         y: 0,
@@ -222,7 +225,7 @@ export default {
         
 
        
-        if( this.mobile== true){
+        if( this.mobile== true && this.touchState == true){
          //console.log(this.speed)
           ipcar.emit("controllerInput", [this.xAxesLeft,this.speed ]);
         }
@@ -277,10 +280,11 @@ export default {
         }else if(this.reverse <1499 &&  this.speed >1501){
            this.sendSpeedValue = 1500; // voor en achteruit tegelijk is 0
         }
-      //console.log( this.xAxesLeft)
-        ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
-      //console.log( this.Kruisje);
-       
+        //console.log( this.xAxesLeft)
+        if(this.touchState == false){
+          ipcar.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue ]);
+          //console.log( this.Kruisje);
+        }
 
         }
         
