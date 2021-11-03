@@ -25,7 +25,7 @@
   <div class="row" v-if="mobile">
     <div class="information" >
       <div class="data">
-        <h4 class="namecar">IP car</h4><div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
+        <h4 class="namecar">IP car4</h4><div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
          <ul>
           <li>Status: {{status}}</li>
           <li>Snelheid: {{realSpeed}}km/h</li>
