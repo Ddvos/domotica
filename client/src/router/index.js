@@ -8,6 +8,11 @@ const routes = [
     component: Home
   },
   {
+    path:'/about',
+    name: 'about',
+    component:() => import(/* webpackChunkName: "livestream" */ '../views/About'),
+}, 
+  {
     path:'/broadcast/:id',
     name: 'Broadcast',
     component:() => import(/* webpackChunkName: "livestream" */ '../views/Broadcast'),
