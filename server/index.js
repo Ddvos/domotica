@@ -5,6 +5,7 @@ const http = require('http');
 const cors = require('cors');
 //const path = require('path');
 const WebSocket = require('ws');
+const history = require('connect-history-api-fallback');
 
 //var FileSaver = require('file-saver');
 //let img = '';
@@ -24,6 +25,7 @@ app.use('/api/posts', posts);
 
 // Handle production
 if(process.env.NODE_ENV === 'production'){
+    app.use(history());
 
     //static folder
     app.use(express.static(__dirname + '/public'));
