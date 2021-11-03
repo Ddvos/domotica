@@ -5,7 +5,7 @@ const http = require('http');
 const cors = require('cors');
 //const path = require('path');
 const WebSocket = require('ws');
-const history = require('connect-history-api-fallback');
+//const history = require('connect-history-api-fallback');
 
 //var FileSaver = require('file-saver');
 //let img = '';
