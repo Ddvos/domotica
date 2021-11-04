@@ -367,7 +367,12 @@ var osc = require("osc");
   // IP-Car
 //////////////////////////////
 const userCountserver = http.createServer(app);
-const io = require("socket.io")(userCountserver); 
+const io = require("socket.io")(userCountserver, {
+  cors: {
+    origin: "https://stepverder.nl",
+    methods: ["GET", "POST"]
+  }
+});
 
 const raumRooms = ["clientRoom"]
 
