@@ -517,7 +517,7 @@ const setControlByType = {
 };
 
 
-const wsServerData = new WebSocket.Server({ server });
+const wsServerData = new WebSocket.Server({ port: 5053 });
 
 let connectedraspberrypis = [];
 
