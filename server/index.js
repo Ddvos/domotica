@@ -508,9 +508,6 @@ rplidarserver.listen(6683,() => console.log('vister counter RAUM is listening on
        // IPCar control connection
 //////////////////////////////////
 
-const wsportdata = 4083; // live stream port
-const dataserver = http.createServer(app);
-
 const datasockets = new Map();
 const controllers = new Set();
 const raspberrypis = new Set();
@@ -519,14 +516,11 @@ const setControlByType = {
   raspberrypi: raspberrypis,
 };
 
-dataserver.listen(
-  wsportdata,
-  () => info(`listening on port ${wsportdata}`)
-);
 
-const wsServerData = new WebSocket.Server({ dataserver });
+const wsServerData = new WebSocket.Server({ server });
 
 let connectedraspberrypis = [];
+
 wsServerData.on('connection', (socket,req) => {
   let peerId;
 
