@@ -369,7 +369,7 @@ var osc = require("osc");
 const userCountserver = http.createServer(app);
 const io = require("socket.io")(userCountserver, {
   cors: {
-    origin: "https://stepverder.nl",
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });

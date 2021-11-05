@@ -17,6 +17,11 @@ const routes = [
     name: 'Broadcast',
     component:() => import(/* webpackChunkName: "livestream" */ '../views/Broadcast'),
 }, 
+{
+  path:'/webrtctest',
+  name: 'webrtctest',
+  component:() => import(/* webpackChunkName: "livestream" */ '../views/Webrtctest'),
+},
 
 ]
 
