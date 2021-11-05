@@ -1,7 +1,7 @@
 <template>
 <div class="background" ref="mouseEvent">
-    <button v-on:click="doThis">connect</button>
-      <button v-on:click="send()">send</button>
+    <button v-on:click="carControl">connect</button>
+      <button v-on:click="sendData">send</button>
 </div>
   
 </template>
@@ -10,14 +10,14 @@
             
 <script>
 
-
+      
 export default {
   
 
   data() {
   return{
-
-     
+    data: 1,
+    sendChannel: null,
     
   }},
  
@@ -35,156 +35,120 @@ export default {
   },
   methods:{ 
 
-      connect(){
-          this.videoStream()
+    
+async carControl(){
 
-         this.internetConnection = window.navigator.onLine;
+              /// websocket WebRTC for car cocontrol. This is the sending side to the Raspberry Pi
+ // chaneel waarover data gestuurd word
 
-         if ( this.internetConnection) {
-                this.status = "connected to internet"
-            } else {
-                this.status = "No internet"
-            }
-      },
-       async videoStream(){
-
-              /// websocket WebRTC for live stream
-      
-
-      const config = {
-        iceServers: [{
-           urls: 'turn:turn.stepverder.nl:3478', //'stun:stun.l.google.com:19302'  turn:178.62.209.37:3478
-           username: 'Dominique',
-           credential: 'WS7Yq_jT'
-        }]
-      };
-
-      const getRandomId = () => {
-        return Math.floor(Math.random() * 10000);
-      };
-
-      const peerId = 'ipcar'+getRandomId();
-      const peerType = 'screen';
-      const connections = new Map();
-
-      let ws;
-      const getSocket = async (peerId, peerType) => {
-        if (ws) return ws;
-
-        return new Promise((resolve, reject) => {
-          try {
+          const config = {
+            iceServers: [{
+              urls: 'turn:turn.stepverder.nl:3478', //'stun:stun.l.google.com:19302'  turn:178.62.209.37:3478 circusfamilyprojects.nl
+               username: 'Dominique',
+               credential: 'WS7Yq_jT'
             
-            ws = new WebSocket('wss://stepverder.nl:4084/ipcar');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:4084
-          
-          console.log(peerId)
-           
-           const onOpen = () => {
+            }]
+          };
+          // const getRandomId = () => {
+          //   return Math.floor(Math.random() * 10000);
+          // };
+          const peerId = 'controller1'
+          const peerType = 'controller';
+          const connections = new Map();
+          let ws;
+          const getSocket = async (peerId, peerType) => {
+            if (ws) return ws;
+            return new Promise((resolve, reject) => {
+              try {
              
-              ws.send(JSON.stringify({
-                type: 'register',
-                peerType,
-                peerId,
-              }));
-
-              ws.removeEventListener('open', onOpen);
-              // console.log(this.test);
-              resolve(ws);
-            };
-
-            ws.addEventListener('open', onOpen);
-          } catch (e) {
-            reject(e);
-          }
-        });
-      };
-
-      try {
-       console.log('in screen');
-        const socket = await getSocket(peerId, peerType);
-        socket.addEventListener('message', async (e) => {
-          try {
-            const msg = JSON.parse(e.data);
-              console.log("camera and selected car are the same "+ msg.from)
+                ws = new WebSocket('wss://stepverder.nl:4084/controller1');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:8084
                
-            if (msg.type === 'offer') {
-              const peerConnection = new RTCPeerConnection(config);
-              connections.set(msg.from, peerConnection);
-                console.log('incoming data '+e);
-                 this.camera = "Online";
-                 this.statusButton = "connected",
-                 this.InActive = false
-                 this.Active = true
-              peerConnection.ontrack = (e) => {
-                console.log('on track', e);
-                window.v.srcObject = e.streams[0];
-                 window.v.play();
-                //window.wait.classList.add('hidden');
-               // window.controls.classList.remove('hidden');
-              };
-
-              peerConnection.onicecandidate = (e) => {
-                if (e.candidate) {
+                const onOpen = () => {
+                  ws.send(JSON.stringify({
+                    type: 'register',
+                    peerType,
+                    peerId,
+                  }));
+                  ws.removeEventListener('open', onOpen);
+                  resolve(ws);
+                };
+                ws.addEventListener('open', onOpen);
+              } catch (e) {
+                reject(e);
+              }
+            });
+          };
+          try {
+            console.log('in controller');
+          // console.log(this.carNumber);
+         
+            const socket = await getSocket(peerId, peerType);
+            socket.addEventListener('message', async (e) => {
+              const msg = JSON.parse(e.data);
+              console.log('msg', msg);
+              if (msg.type === 'Raspberrypi') {
+                console.log("raspberry pi probeert te verbinden")
+                for (let Raspberrypi of msg.Raspberrypis) {
+                  const peerConnection = new RTCPeerConnection(config);
+                  connections.set(Raspberrypi, peerConnection);
+                  // peerConnection.addStream(window.v.srcObject);
+                  this.sendChannel = peerConnection.createDataChannel('sendDataChannel');
+                  
+                
+                  const sdp = await peerConnection.createOffer();
+                  await peerConnection.setLocalDescription(sdp);
+                  peerConnection.onicecandidate = (e) => {
+                    if (e.candidate) {
+                      socket.send(JSON.stringify({
+                        type: 'candidate',
+                        from: peerId,
+                        to: screen,
+                        data: e.candidate,
+                      }));
+                    }
+                  };
                   socket.send(JSON.stringify({
-                    type: 'candidate',
+                    type: 'offer',
+                    to: screen,
                     from: peerId,
-                    to: msg.from,
-                    data: e.candidate,
+                    data: peerConnection.localDescription,
                   }));
                 }
-              };
-
-              await peerConnection.setRemoteDescription(msg.data);
-              const sdp = await peerConnection.createAnswer();
-              await peerConnection.setLocalDescription(sdp);
-
-             // console.log('sending answer');
-              socket.send(JSON.stringify({
-                to: msg.from,
-                from: peerId,
-                type: 'answer',
-                data: peerConnection.localDescription
-              }));
-            }
-
-            if (msg.type === 'disconnect') {
-              const connection = connections.get(msg.from);
-              if (connection) {
-                 this.camera = "Offline";
-                  this.statusButton = "connect",
-                  this.InActive = true
-                 this.Active = false
-                console.log('Disconnecting from', msg.from);
-                connection.ontrack = null;
-                connection.onicecandidate = null;
-                connection.close();
-                connections.delete(msg.from);
               }
-            }
-
-            if (msg.type === 'candidate') {
-              const connection = connections.get(msg.from);
-              if (connection) {
-                console.log('Adding candidate to', msg.from);
-                connection.addIceCandidate(new RTCIceCandidate(
-                  msg.data
-                ));
+              if (msg.type === 'answer') {
+                const peerConnection = connections.get(msg.from);
+                peerConnection.setRemoteDescription(msg.data);
               }
-            }
-           
+              if (msg.type === 'disconnect') {
+                const connection = connections.get(msg.from);
+                if (connection) {
+                  console.log('Disconnecting from', msg.from);
+                  connection.close();
+                  connections.delete(msg.from);
+                }
+              }
+              if (msg.type === 'candidate') {
+                const connection = connections.get(msg.from);
+                if (connection) {
+                  console.log('Adding candidate to', msg.from);
+                  connection.addIceCandidate(new RTCIceCandidate(
+                    msg.data
+                  ));
+                }
+              }
+            });
           } catch (e) {
-            console.error(e);
-                 console.log("error niewe verbiding openen lukt niet")
+            console.log("error: "+e);
           }
-        });
-
-       } catch (e) {
-          console.error(e);
-          console.log("error niewe verbiding openen lukt niet")
-          }
-      },
+        },
       
    
   },
+  sendData: function(){
+      this.sendChannel.send(this.data);
+  }
+
+
   
 }
 

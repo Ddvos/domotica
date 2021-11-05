@@ -504,6 +504,154 @@ rplidarserver.listen(6683,() => console.log('vister counter RAUM is listening on
 
 // rplidar sensor school project
 
+////////////////////////////////////
+       // IPCar control connection
+//////////////////////////////////
+
+const wsportdata = 4083; // live stream port
+const dataserver = http.createServer(app);
+
+const datasockets = new Map();
+const controllers = new Set();
+const raspberrypis = new Set();
+const setByType = {
+  controller: controllers,
+  raspberrypi: raspberrypis,
+};
+
+dataserver.listen(
+  wsportdata,
+  () => info(`listening on port ${wsportdata}`)
+);
+
+const wsServerData = new WebSocket.Server({ dataserver });
+
+let connectedraspberrypis = [];
+wsServerData.on('connection', (socket,req) => {
+  let peerId;
+
+  var webURL =req.url
+  
+  //connectedraspberrypis.push({ socket,webURL});
+
+  const onMessage = (e) => {
+    connectedraspberrypis.push(e);
+ 
+    const msg = JSON.parse(e); 
+
+    if (msg.type === 'register') {
+      peerId = msg.peerId;
+      const { peerType } = msg;
+
+      info(`${peerType} registered, id: ${peerId}`);
+
+      setByType[peerType].add(peerId);
+      datasockets.set(peerId, socket);
+
+     console.log("controller registered");
+
+      if (peerType === 'controller') {
+        socket.send(JSON.stringify({
+          type: 'raspberrypis',
+          raspberrypis: Array.from(raspberrypis), // send evry body who is watching to the tream
+        }));
+      }
+
+      if (peerType === 'raspberrypi') {
+        for (let controllerId of controllers) {
+          const controllersocket = datasockets.get(controllerId);
+          if (controllerId == peerId.slice(0, 5)){ // als de controller id en  car id het zelfde zijn stuur dan de raspberrypiId (broadcast car)
+            controllersocket.send(JSON.stringify({
+              type: 'raspberrypis',
+              raspberrypis: [ peerId ],
+            }));
+          }
+           else{
+            console.log("controller ID "+controllerId +"is niet het zelfde als " + peerId.slice(0, 5));
+            }
+        
+        }
+      }
+    }
+
+    if (msg.type === 'offer') {
+      var selectedCar = msg.to
+      if(msg.from == selectedCar.slice(0, 5) ){ /// vergelijkt de controller met de geselcteerde raspberrypi
+         console.log("controller en beeld zijn het zelfde");
+        info(`controller ${msg.from} sent offer to raspberrypi ${msg.to}`);
+        if (!raspberrypis.has(msg.to)) {
+          warn(`offer sent to raspberrypi ${msg.to} that's not registered`);
+          return;
+        }
+
+        var selectedCar = msg.to
+
+        console.log(`controller ${msg.from} sent offer to raspberrypi ${selectedCar.slice(0, 5)}`);
+        const socket = datasockets.get(msg.to);
+        socket.send(e);
+      }
+    }
+
+    if (msg.type === 'answer') {
+
+        info(`raspberrypi ${msg.from} sent answer to controller ${msg.to}`);
+        if (!controllers.has(msg.to)) {
+          warn(`offer sent to controller ${msg.to} that's not registered`);
+          return;
+        }
+      const socket = datasockets.get(msg.to);
+      socket.send(e);     
+    }
+
+    if (msg.type === 'candidate') {
+      info(`ice candidate from ${msg.from} to ${msg.to}`);
+      const socketTo = datasockets.get(msg.to);
+
+      if (!socketTo) {
+        warn(`candidate sent to ${msg.to}, that's not registered`);
+        return;
+      }
+
+      socketTo.send(e);
+    }
+  };
+
+  const onClose = () => {
+    info(`socket closed ${peerId}`);
+
+    let sendDisconnectTo;
+    if (raspberrypis.has(peerId)) {
+      sendDisconnectTo = controllers;
+    }
+
+    if (controllers.has(peerId)) {
+      sendDisconnectTo = raspberrypis;
+    }
+
+    for (let targetId of sendDisconnectTo) {
+      datasockets.get(targetId).send(JSON.stringify({
+        type: 'disconnect',
+        from: peerId
+      }));
+    }
+
+    socket.off('message', onMessage);
+    socket.off('close', onClose);
+
+    controllers.delete(peerId);
+    raspberrypis.delete(peerId);
+    datasockets.delete(peerId);
+  };
+
+  socket.on('message', onMessage);
+  socket.on('close', onClose);
+});
+
+
+////////////////////////////////////
+   // einde IPCar control connection
+//////////////////////////////////
+
 
 // end OSC websocket 
 app.listen(port,()=>console.log(`Server started on port ${port}`));
