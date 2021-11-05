@@ -505,7 +505,7 @@ rplidarserver.listen(6683,() => console.log('vister counter RAUM is listening on
 // rplidar sensor school project
 
 ////////////////////////////////////
-       // IPCar control connection
+       // IPCar webRTC controller connection
 //////////////////////////////////
 
 const datasockets = new Map();
@@ -526,6 +526,7 @@ wsServerData.on('connection', (socket,req) => {
 
   var webURL =req.url
   
+  console.log(webURL)
   //connectedraspberrypis.push({ socket,webURL});
 
   const onMessage = (e) => {
