@@ -514,7 +514,7 @@ const dataserver = http.createServer(app);
 const datasockets = new Map();
 const controllers = new Set();
 const raspberrypis = new Set();
-const setByType = {
+const setControlByType = {
   controller: controllers,
   raspberrypi: raspberrypis,
 };
@@ -545,7 +545,7 @@ wsServerData.on('connection', (socket,req) => {
 
       info(`${peerType} registered, id: ${peerId}`);
 
-      setByType[peerType].add(peerId);
+      setControlByType[peerType].add(peerId);
       datasockets.set(peerId, socket);
 
      console.log("controller registered");
