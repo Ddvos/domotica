@@ -441,13 +441,13 @@ export default {
            
           } catch (e) {
             console.error(e);
-                 console.log("error niewe verbiding openen lukt niet")
+                 console.log("error niewe verbiding openen lukt niet "+ e)
           }
         });
 
        } catch (e) {
           console.error(e);
-          console.log("error niewe verbiding openen lukt niet")
+          console.log("error niewe verbiding openen lukt niet: "+e)
           }
       },
       
