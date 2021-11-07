@@ -223,14 +223,13 @@ wsServer.on('connection', (socket,req) => {
         var selectedCar = msg.to
 
         console.log(`camera ${msg.from} sent offer to screen ${selectedCar}`);
-        console.log(msg)
         const socket = sockets.get(msg.to);
         socket.send(JSON.stringify(msg));
       }
     }
 
     if (msg.type === 'answer') {
-
+      console.log("antwoord ontvangen van scherm en stuur naar car")
         info(`screen ${msg.from} sent answer to camera ${msg.to}`);
         if (!cameras.has(msg.to)) {
           warn(`offer sent to camera ${msg.to} that's not registered`);
@@ -243,6 +242,7 @@ wsServer.on('connection', (socket,req) => {
     }
 
     if (msg.type === 'candidate') {
+      console.log(msg)
       info(`ice candidate from ${msg.from} to ${msg.to}`);
       const socketTo = sockets.get(msg.to);
 

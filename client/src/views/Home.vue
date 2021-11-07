@@ -372,14 +372,14 @@ export default {
         socket.addEventListener('message', async (e) => {
           //console.log(e)
           try {
-            //const msg = JSON.parse(e.data)
-             console.log(e)
+            const msg = JSON.parse(e.data)
+             console.log(msg)
                
             if (msg.type === 'offer') {
               console.log("hallo")
               const peerConnection = new RTCPeerConnection(config);
               connections.set(msg.from, peerConnection);
-                console.log('incoming data '+e);
+                console.log('incoming data ');
                  this.camera = "Online";
                  this.statusButton = "connected",
                  this.InActive = false
@@ -393,6 +393,7 @@ export default {
               };
 
               peerConnection.onicecandidate = (e) => {
+                  console.log('set icecandidate');
                 if (e.candidate) {
                   socket.send(JSON.stringify({
                     type: 'candidate',

@@ -97,12 +97,12 @@ export default {
             window.v.play();
             const socket = await getSocket(peerId, peerType);
             socket.addEventListener('message', async (e) => {
-              console.log(e)
+             
               const msg = JSON.parse(e.data);
               console.log('msg', msg);
               if (msg.type === 'screens') {
                 console.log("vraag om beeld voor candidaten")
-                console.log(e)
+               
                 for (let screen of msg.screens) {
                   const peerConnection = new RTCPeerConnection(config);
                   connections.set(screen, peerConnection);
@@ -115,6 +115,7 @@ export default {
                   await peerConnection.setLocalDescription(sdp);
                   peerConnection.onicecandidate = (e) => {
                     if (e.candidate) {
+                      console.log("set ice candidate")
                       socket.send(JSON.stringify({
                         type: 'candidate',
                         from: peerId,
@@ -132,6 +133,7 @@ export default {
                 }
               }
               if (msg.type === 'answer') {
+                console.log("antwoord van screen")
                 const peerConnection = connections.get(msg.from);
                 peerConnection.setRemoteDescription(msg.data);
               }
