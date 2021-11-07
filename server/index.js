@@ -422,16 +422,17 @@ wsServer2.on('connection', (socket,req) => {
 
 // upgrade om meerdere websockers servers mogelijk te maken
 server.on('upgrade', function upgrade(request, socket, head) {
-
-
+  const { pathname } = parse(request.url);
+  if (pathname === '/ipcar') {
   wsServer1.handleUpgrade(request, socket, head, function done(ws) { // webrtc live video stream
     wsServer1.emit('connection', ws, request);
     });
-
+  }
+  if (pathname === '/controller') {
   wsServer2.handleUpgrade(request, socket, head, function done(ws) { // webrtc data stream van controller
       wsServer2.emit('connection', ws, request);
     });
-  
+  }
 });
 
 server.listen(4083);
