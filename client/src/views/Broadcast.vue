@@ -63,8 +63,9 @@ export default {
                     'ws:'
                 );
                 ws = new WebSocket('wss://stepverder.nl:4084/'+this.user+'');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:8084
-               
+                console.log(ws)
                 const onOpen = () => {
+                 
                   ws.send(JSON.stringify({
                     type: 'register',
                     peerType,
