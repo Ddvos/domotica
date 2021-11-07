@@ -422,11 +422,11 @@ wsServer2.on('connection', (socket,req) => {
 
 // upgrade om meerdere websockers servers mogelijk te maken
 server.on('upgrade', function upgrade(request, socket, head) {
-    
+  console.log(request.url)
  
 
   wsServer1.handleUpgrade(request, socket, head, function done(ws) { // webrtc live video stream
-    console.log(request.url)
+    //console.log(request.url)
     wsServer1.emit('connection', ws, request);
     });
 
