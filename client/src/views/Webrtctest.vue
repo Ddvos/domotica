@@ -52,7 +52,7 @@ async carControl(){
           // const getRandomId = () => {
           //   return Math.floor(Math.random() * 10000);
           // };
-          const peerId = 'controller1'
+          const peerId = 'controller1234'
           const peerType = 'controller';
           const connections = new Map();
           let ws;
