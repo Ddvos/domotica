@@ -426,7 +426,7 @@ server.on('upgrade', function upgrade(request, socket, head) {
  
 
   wsServer1.handleUpgrade(request, socket, head, function done(ws) { // webrtc live video stream
-    console.log(ws.upgradeReq.url)
+    console.log(request.url)
     wsServer1.emit('connection', ws, request);
     });
 
