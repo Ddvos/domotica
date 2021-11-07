@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const http = require('http');
 const cors = require('cors');
+var Parse = require('parse')
 //const path = require('path');
 const WebSocket = require('ws');
 //const history = require('connect-history-api-fallback');
@@ -422,7 +423,7 @@ wsServer2.on('connection', (socket,req) => {
 
 // upgrade om meerdere websockers servers mogelijk te maken
 server.on('upgrade', function upgrade(request, socket, head) {
-  const { pathname } = parse(request.url);
+  const { pathname } = Parse(request.url);
   if (pathname === '/ipcar') {
   wsServer1.handleUpgrade(request, socket, head, function done(ws) { // webrtc live video stream
     wsServer1.emit('connection', ws, request);
