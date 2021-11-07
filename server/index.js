@@ -237,7 +237,7 @@ wsServer.on('connection', (socket,req) => {
         }
 
       const socket = sockets.get(msg.to);
-      socket.send(e); 
+      socket.send(JSON.stringify(msg)); 
       
     }
 

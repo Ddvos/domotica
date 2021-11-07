@@ -97,7 +97,7 @@ export default {
             window.v.play();
             const socket = await getSocket(peerId, peerType);
             socket.addEventListener('message', async (e) => {
-             
+                   console.log(e);
               const msg = JSON.parse(e.data);
               console.log('msg', msg);
               if (msg.type === 'screens') {
