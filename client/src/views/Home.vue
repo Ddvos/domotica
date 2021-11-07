@@ -370,6 +370,7 @@ export default {
        console.log('in screen');
         const socket = await getSocket(peerId, peerType);
         socket.addEventListener('message', async (e) => {
+          //console.log(e)
           try {
             const msg = JSON.parse(e.data);
               console.log("camera and selected car are the same "+ msg.from)
@@ -441,13 +442,13 @@ export default {
            
           } catch (e) {
             console.error(e);
-                 console.log("error niewe verbiding openen lukt niet "+ e)
+                 console.log("error video beeld niet ontvangen "+ e)
           }
         });
 
        } catch (e) {
           console.error(e);
-          console.log("error niewe verbiding openen lukt niet: "+e)
+          console.log("error verbinding mislukt: "+e)
           }
       },
       

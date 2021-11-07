@@ -223,6 +223,7 @@ wsServer.on('connection', (socket,req) => {
         var selectedCar = msg.to
 
         console.log(`camera ${msg.from} sent offer to screen ${selectedCar.slice(0, 5)}`);
+        console.log(`otvangen message type is: ${msg.type}`);
         const socket = sockets.get(msg.to);
         socket.send(e);
       }

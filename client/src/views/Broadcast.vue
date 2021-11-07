@@ -107,6 +107,7 @@ export default {
                   // peerConnection.addStream(window.v.srcObject);
                   for (let track of mediaStream.getTracks()) {
                     peerConnection.addTrack(track, mediaStream);
+                    //console.log(track)
                   }
                   const sdp = await peerConnection.createOffer();
                   await peerConnection.setLocalDescription(sdp);
