@@ -372,10 +372,11 @@ export default {
         socket.addEventListener('message', async (e) => {
           //console.log(e)
           try {
-            const msg = e
-              console.log(e)
+            const msg = JSON.parse(JSON.stringify(e.data))
+             console.log(msg)
                
             if (msg.type === 'offer') {
+              console.log("hallo")
               const peerConnection = new RTCPeerConnection(config);
               connections.set(msg.from, peerConnection);
                 console.log('incoming data '+e);
