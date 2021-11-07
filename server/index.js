@@ -424,12 +424,18 @@ wsServer2.on('connection', (socket,req) => {
 server.on('upgrade', function upgrade(request, socket, head) {
   console.log(request.url)
  
-
-  wsServer1.handleUpgrade(request, socket, head, function done(ws) { // webrtc live video stream
+if (request.url == '/ipcar'){ // webrtc live video stream
+  wsServer1.handleUpgrade(request, socket, head, function done(ws) { 
     //console.log(request.url)
     wsServer1.emit('connection', ws, request);
     });
-
+  }
+if (request.url == '/controller'){ // webrtc live  data stream
+    wsServer2.handleUpgrade(request, socket, head, function done(ws) { 
+      //console.log(request.url)
+      wsServer2.emit('connection', ws, request);
+      });
+    }
  
 });
 
