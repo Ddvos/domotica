@@ -251,7 +251,7 @@ wsServer.on('connection', (socket,req) => {
         return;
       }
 
-      socketTo.send(e);
+      socketTo.send(JSON.stringify(msg));
     }
 
   // }
