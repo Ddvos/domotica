@@ -137,27 +137,19 @@ const setByType = {
   screen: screens,
 };
 
-server.listen(
-    wsport,
-  () => info(`listening on port ${wsport}`)
-);
+// server.listen(
+//     wsport,
+//   () => info(`listening on port ${wsport}`)
+// );
 
-const wsServer = new WebSocket.Server({ server });
+const wsServer1 = new WebSocket.Server({ noServer: true });
 
 let connectedClients = [];
-wsServer.on('connection', (socket,req) => {
+wsServer1.on('connection', (socket,req) => {
   let peerId;
-
- 
-
   var webURL =req.url
   
   //connectedClients.push({ socket,webURL});
-
-
-   
-
-
   const onMessage = (e) => {
     connectedClients.push(e);
  
@@ -229,7 +221,7 @@ wsServer.on('connection', (socket,req) => {
     }
 
     if (msg.type === 'answer') {
-      console.log("antwoord ontvangen van scherm en stuur naar car")
+     // console.log("antwoord ontvangen van scherm en stuur naar car")
         info(`screen ${msg.from} sent answer to camera ${msg.to}`);
         if (!cameras.has(msg.to)) {
           warn(`offer sent to camera ${msg.to} that's not registered`);
@@ -242,7 +234,7 @@ wsServer.on('connection', (socket,req) => {
     }
 
     if (msg.type === 'candidate') {
-      console.log(msg)
+     // console.log(msg)
       info(`ice candidate from ${msg.from} to ${msg.to}`);
       const socketTo = sockets.get(msg.to);
 
@@ -293,9 +285,20 @@ wsServer.on('connection', (socket,req) => {
 
   socket.on('message', onMessage);
   socket.on('close', onClose);
+}); /// einde wsServer1 
+
+
+// upgrade om meerdere websockers servers mogelijk te maken
+server.on('upgrade', function upgrade(request, socket, head) {
+
+
+  wsServer1.handleUpgrade(request, socket, head, function done(ws) {
+    wsServer1.emit('connection', ws, request);
+    });
+  
 });
 
-
+server.listen(4083);
 ////////////////////////////////////
        // einde live stream test
 //////////////////////////////////

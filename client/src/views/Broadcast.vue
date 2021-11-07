@@ -97,7 +97,7 @@ export default {
             window.v.play();
             const socket = await getSocket(peerId, peerType);
             socket.addEventListener('message', async (e) => {
-                   console.log(e);
+                 //  console.log(e);
               const msg = JSON.parse(e.data);
               console.log('msg', msg);
               if (msg.type === 'screens') {
@@ -115,7 +115,7 @@ export default {
                   await peerConnection.setLocalDescription(sdp);
                   peerConnection.onicecandidate = (e) => {
                     if (e.candidate) {
-                      console.log("set ice candidate")
+                      //console.log("set ice candidate")
                       socket.send(JSON.stringify({
                         type: 'candidate',
                         from: peerId,
@@ -133,14 +133,14 @@ export default {
                 }
               }
               if (msg.type === 'answer') {
-                console.log("antwoord van screen")
+               // console.log("antwoord van screen")
                 const peerConnection = connections.get(msg.from);
                 peerConnection.setRemoteDescription(msg.data);
               }
               if (msg.type === 'disconnect') {
                 const connection = connections.get(msg.from);
                 if (connection) {
-                  console.log('Disconnecting from', msg.from);
+                 // console.log('Disconnecting from', msg.from);
                   connection.close();
                   connections.delete(msg.from);
                 }
@@ -148,7 +148,7 @@ export default {
               if (msg.type === 'candidate') {
                 const connection = connections.get(msg.from);
                 if (connection) {
-                  console.log('Adding candidate to', msg.from);
+                 // console.log('Adding candidate to', msg.from);
                   connection.addIceCandidate(new RTCIceCandidate(
                     msg.data
                   ));
