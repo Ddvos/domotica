@@ -225,7 +225,7 @@ wsServer.on('connection', (socket,req) => {
         console.log(`camera ${msg.from} sent offer to screen ${selectedCar}`);
         console.log(msg)
         const socket = sockets.get(msg.to);
-        socket.send(msg);
+        socket.send(e);
       }
     }
 
