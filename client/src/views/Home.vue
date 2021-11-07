@@ -372,8 +372,8 @@ export default {
         socket.addEventListener('message', async (e) => {
           //console.log(e)
           try {
-            const msg = JSON.parse(e.data);
-              console.log("camera and selected car are the same "+ msg.from)
+            const msg = e
+              console.log(e)
                
             if (msg.type === 'offer') {
               const peerConnection = new RTCPeerConnection(config);

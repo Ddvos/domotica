@@ -101,6 +101,7 @@ export default {
               console.log('msg', msg);
               if (msg.type === 'screens') {
                 console.log("vraag om beeld voor candidaten")
+                console.log(e)
                 for (let screen of msg.screens) {
                   const peerConnection = new RTCPeerConnection(config);
                   connections.set(screen, peerConnection);
