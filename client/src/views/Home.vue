@@ -372,8 +372,8 @@ export default {
         socket.addEventListener('message', async (e) => {
           //console.log(e)
           try {
-            const msg = JSON.parse(JSON.stringify(e.data))
-             console.log(msg)
+            //const msg = JSON.parse(e.data)
+             console.log(e)
                
             if (msg.type === 'offer') {
               console.log("hallo")
