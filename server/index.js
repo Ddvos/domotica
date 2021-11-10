@@ -143,6 +143,11 @@ const setByType = {
   screen: screens,
 };
 
+const setByTypeData = {
+  controller: controllers,
+  ipcar: ipcars,
+};
+
 // server.listen(
 //     wsport,
 //   () => info(`listening on port ${wsport}`)
@@ -314,25 +319,26 @@ wsServer2.on('connection', (socket,req) => {
 
       info(`${peerType} registered, id: ${peerId}`);
 
-     // setByType[peerType].add(peerId);
+     setByTypeData[peerType].add(peerId);
       sockets2.set(peerId, socket);
 
      // console.log( sockets);
 
       if (peerType === 'controller') {
         socket.send(JSON.stringify({
-          type: 'ipcars',
-          ipcars: Array.from(ipcars), // send evry body who is watching to the tream
+          type: 'Raspberrypis',
+          ipcars: Array.from(ipcars), // send IPCar data naar de controller
         }));
       }
 
       if (peerType === 'ipcar') {
         console.log("Ipcar probeert te verbinden")
         for (let controllerId of controllers) {
+          console.log(controllers)
           const controllerSocket = sockets2.get(controllerId);
           if (controllerId == peerId){ // als de controller id en  car id het zelfde zijn stuur dan de ipcarId (broadcast car)
             controllerSocket.send(JSON.stringify({
-              type: 'ipcars',
+              type: 'Raspberrypis',
               ipcars: [ peerId ],
             }));
           }

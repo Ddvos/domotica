@@ -52,7 +52,7 @@ async carControl(){
           // const getRandomId = () => {
           //   return Math.floor(Math.random() * 10000);
           // };
-          const peerId = 'controller1234'
+          const peerId = 'controldata'
           const peerType = 'controller';
           const connections = new Map();
           let ws;
@@ -87,7 +87,7 @@ async carControl(){
             socket.addEventListener('message', async (e) => {
               const msg = JSON.parse(e.data);
               console.log('msg', msg);
-              if (msg.type === 'Raspberrypi') {
+              if (msg.type === 'Raspberrypis') {
                 console.log("raspberry pi probeert te verbinden")
                 for (let Raspberrypi of msg.Raspberrypis) {
                   const peerConnection = new RTCPeerConnection(config);
