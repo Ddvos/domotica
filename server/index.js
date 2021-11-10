@@ -305,7 +305,7 @@ wsServer2.on('connection', (socket,req) => {
   //connectedClients.push({ socket,webURL});
   const onMessage = (e) => {
     const msg = JSON.parse(e);
-   
+   console.log(msg)
 
     if (msg.type === 'register') {
       peerId = msg.peerId;
@@ -319,6 +319,7 @@ wsServer2.on('connection', (socket,req) => {
      // console.log( sockets);
 
       if (peerType === 'controller') {
+        console.log("controller probeerd te verinden")
         socket.send(JSON.stringify({
           type: 'ipcars',
           ipcars: Array.from(ipcars), // send evry body who is watching to the tream
@@ -422,7 +423,7 @@ wsServer2.on('connection', (socket,req) => {
 
 // upgrade om meerdere websockers servers mogelijk te maken
 server.on('upgrade', function upgrade(request, socket, head) {
-  console.log(request.url)
+ // console.log(request.url)
  
 if (request.url == '/ipcar'){ // webrtc live video stream
   wsServer1.handleUpgrade(request, socket, head, function done(ws) { 

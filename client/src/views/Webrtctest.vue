@@ -61,7 +61,7 @@ async carControl(){
             return new Promise((resolve, reject) => {
               try {
              
-                ws = new WebSocket('wss://stepverder.nl:5083');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:8084
+                ws = new WebSocket('wss://stepverder.nl:4084/controller');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:8084
                
                 const onOpen = () => {
                   ws.send(JSON.stringify({
