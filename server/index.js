@@ -327,19 +327,19 @@ wsServer2.on('connection', (socket,req) => {
       if (peerType === 'controller') {
         socket.send(JSON.stringify({
           type: 'Raspberrypis',
-          ipcars: Array.from(ipcars), // send IPCar data naar de controller
+          Raspberrypis: Array.from(Raspberrypis), // send IPCar data naar de controller
         }));
       }
 
       if (peerType === 'Raspberrypi') {
-        console.log("Ipcar probeert te verbinden")
+        console.log("Raspberrypi probeert te verbinden")
         for (let controllerId of controllers) {
           console.log(controllers)
           const controllerSocket = sockets2.get(controllerId);
           if (controllerId == peerId){ // als de controller id en  car id het zelfde zijn stuur dan de ipcarId (broadcast car)
             controllerSocket.send(JSON.stringify({
               type: 'Raspberrypis',
-              ipcars: [ peerId ],
+              Raspberrypis: [ peerId ],
             }));
           }
            else{
@@ -400,12 +400,12 @@ wsServer2.on('connection', (socket,req) => {
     info(`socket closed ${peerId}`);
 
     let sendDisconnectTo;
-    if (ipcars.has(peerId)) {
+    if (Raspberrypis.has(peerId)) {
       sendDisconnectTo = controllers;
     }
 
     if (controllers.has(peerId)) {
-      sendDisconnectTo = ipcars;
+      sendDisconnectTo = Raspberrypis;
     }
 
     for (let targetId of sendDisconnectTo) {
