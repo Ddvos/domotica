@@ -100,6 +100,7 @@ async carControl(){
                   await peerConnection.setLocalDescription(sdp);
                   peerConnection.onicecandidate = (e) => {
                     if (e.candidate) {
+                      console.log("ice candidate wordt aangemaakt")
                       socket.send(JSON.stringify({
                         type: 'candidate',
                         from: peerId,
@@ -108,6 +109,7 @@ async carControl(){
                       }));
                     }
                   };
+                   console.log("offer wordt gestuurd")
                   socket.send(JSON.stringify({
                     type: 'offer',
                     to: screen,
