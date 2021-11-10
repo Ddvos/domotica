@@ -336,7 +336,7 @@ wsServer2.on('connection', (socket,req) => {
           const controllerSocket = sockets2.get(controllerId);
           if (controllerId == peerId){ // als de controller id en  car id het zelfde zijn stuur dan de ipcarId (broadcast car)
             console.log("Raspberry Pi en controller hebben de zelfde peerID")
-            console.log(controllerSocket)
+            console.log(sockets2)
             controllerSocket.send(JSON.stringify({
               type: 'Raspberrypis',
               Raspberrypis: [ peerId ],
