@@ -136,7 +136,7 @@ const cameras = new Set();
 const screens = new Set();
 
 const controllers = new Set();
-const ipcars = new Set();
+const Raspberrypis = new Set();
 
 const setByType = {
   camera: cameras,
@@ -145,7 +145,7 @@ const setByType = {
 
 const setByTypeData = {
   controller: controllers,
-  ipcar: ipcars,
+  Raspberrypi: Raspberrypis,
 };
 
 // server.listen(
@@ -310,7 +310,7 @@ wsServer2.on('connection', (socket,req) => {
   //connectedClients.push({ socket,webURL});
   const onMessage = (e) => {
     const msg = JSON.parse(e);
-   console.log(msg)
+   
    console.log(msg.peerType)
 
     if (msg.type === 'register') {
@@ -318,7 +318,7 @@ wsServer2.on('connection', (socket,req) => {
       const { peerType } = msg;
 
       info(`${peerType} registered, id: ${peerId}`);
-
+    console.log(msg.peerId)
      setByTypeData[peerType].add(peerId);
       sockets2.set(peerId, socket);
 
