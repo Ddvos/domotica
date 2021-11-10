@@ -331,7 +331,7 @@ wsServer2.on('connection', (socket,req) => {
         }));
       }
 
-      if (peerType === 'ipcar') {
+      if (peerType === 'Raspberrypi') {
         console.log("Ipcar probeert te verbinden")
         for (let controllerId of controllers) {
           console.log(controllers)
