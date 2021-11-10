@@ -306,6 +306,7 @@ wsServer2.on('connection', (socket,req) => {
   const onMessage = (e) => {
     const msg = JSON.parse(e);
    console.log(msg)
+   console.log(msg.peerType)
 
     if (msg.type === 'register') {
       peerId = msg.peerId;
@@ -319,7 +320,6 @@ wsServer2.on('connection', (socket,req) => {
      // console.log( sockets);
 
       if (peerType === 'controller') {
-        console.log("controller probeerd te verinden")
         socket.send(JSON.stringify({
           type: 'ipcars',
           ipcars: Array.from(ipcars), // send evry body who is watching to the tream
@@ -327,16 +327,17 @@ wsServer2.on('connection', (socket,req) => {
       }
 
       if (peerType === 'ipcar') {
+        console.log("Ipcar probeert te verbinden")
         for (let controllerId of controllers) {
           const controllerSocket = sockets2.get(controllerId);
-          if (controllerId == peerId.slice(0, 5)){ // als de controller id en  car id het zelfde zijn stuur dan de ipcarId (broadcast car)
+          if (controllerId == peerId){ // als de controller id en  car id het zelfde zijn stuur dan de ipcarId (broadcast car)
             controllerSocket.send(JSON.stringify({
               type: 'ipcars',
               ipcars: [ peerId ],
             }));
           }
            else{
-            console.log("controller ID "+controllerId +"is niet het zelfde als " + peerId.slice(0, 5));
+            console.log("controller ID "+controllerId +"is niet het zelfde als " + peerId);
             }
         
         }
