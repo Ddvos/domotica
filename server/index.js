@@ -332,11 +332,10 @@ wsServer2.on('connection', (socket,req) => {
       }
 
       if (peerType === 'Raspberrypi') {
-        console.log("Raspberrypi probeert te verbinden")
-        for (let controllerId of controllers) {
-          console.log(controllers)
+        for (let controllerId of controllers) { 
           const controllerSocket = sockets2.get(controllerId);
           if (controllerId == peerId){ // als de controller id en  car id het zelfde zijn stuur dan de ipcarId (broadcast car)
+            console.log("Raspberry Pi en controller hebben de zelfde peerID")
             controllerSocket.send(JSON.stringify({
               type: 'Raspberrypis',
               Raspberrypis: [ peerId ],
@@ -352,8 +351,8 @@ wsServer2.on('connection', (socket,req) => {
 
     if (msg.type === 'offer') {
       var selectedCar = msg.to
-      if(msg.from == selectedCar.slice(0, 5) ){ /// vergelijkt het controller beeld met de geselcteerde auto
-         console.log("controller en beeld zijn het zelfde");
+      if(msg.from == selectedCar){ /// vergelijkt het controller beeld met de geselcteerde auto
+         console.log("controller en raspberry pi zijn het zelfde");
         info(`controller ${msg.from} sent offer to ipcar ${msg.to}`);
         if (!ipcars.has(msg.to)) {
           warn(`offer sent to ipcar ${msg.to} that's not registered`);
@@ -362,7 +361,7 @@ wsServer2.on('connection', (socket,req) => {
 
         var selectedCar = msg.to
 
-        console.log(`controller ${msg.from} sent offer to ipcar ${selectedCar}`);
+        console.log(`controller ${msg.from} sent offer to raspberrypi ${selectedCar}`);
         const socket = sockets2.get(msg.to);
         socket.send(JSON.stringify(msg));
       }
@@ -382,7 +381,7 @@ wsServer2.on('connection', (socket,req) => {
     }
 
     if (msg.type === 'candidate') {
-     // console.log(msg)
+      console.log(`ice candidate from ${msg.from}`)
       info(`ice candidate from ${msg.from} to ${msg.to}`);
       const socketTo = sockets2.get(msg.to);
 
