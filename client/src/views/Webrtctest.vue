@@ -104,7 +104,7 @@ async carControl(){
                       socket.send(JSON.stringify({
                         type: 'candidate',
                         from: peerId,
-                        to: screen,
+                        to: Raspberrypi,
                         data: e.candidate,
                       }));
                     }
@@ -112,7 +112,7 @@ async carControl(){
                    console.log("offer wordt gestuurd")
                   socket.send(JSON.stringify({
                     type: 'offer',
-                    to: screen,
+                    to: Raspberrypi,
                     from: peerId,
                     data: peerConnection.localDescription,
                   }));

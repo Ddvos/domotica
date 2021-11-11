@@ -356,7 +356,7 @@ wsServer2.on('connection', (socket,req) => {
       if(msg.from == selectedCar.slice(0, 11)){ /// vergelijkt het controller beeld met de geselcteerde auto
          console.log("controller en raspberry pi zijn het zelfde");
         info(`controller ${msg.from} sent offer to ipcar ${msg.to}`);
-        if (!ipcars.has(msg.to)) {
+        if (!Raspberrypis.has(msg.to)) {
           warn(`offer sent to ipcar ${msg.to} that's not registered`);
           return;
         }
