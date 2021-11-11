@@ -335,7 +335,7 @@ wsServer2.on('connection', (socket,req) => {
         for (let controllerId of controllers) {
           console.log(peerId.slice(0, 5)) 
           const controllerSocket = sockets2.get(controllerId);
-          if (controllerId == peerId.slice(0, 5)){ // als de controller id en  car id het zelfde zijn stuur dan de ipcarId (broadcast car)
+          if (controllerId == peerId.slice(0, 11)){ // als de controller id en  car id het zelfde zijn stuur dan de ipcarId (broadcast car)
             console.log("Raspberry Pi en controller hebben de zelfde peerID")
          
             controllerSocket.send(JSON.stringify({
@@ -353,7 +353,7 @@ wsServer2.on('connection', (socket,req) => {
 
     if (msg.type === 'offer') {
       var selectedCar = msg.to
-      if(msg.from == selectedCar.slice(0, 5)){ /// vergelijkt het controller beeld met de geselcteerde auto
+      if(msg.from == selectedCar.slice(0, 11)){ /// vergelijkt het controller beeld met de geselcteerde auto
          console.log("controller en raspberry pi zijn het zelfde");
         info(`controller ${msg.from} sent offer to ipcar ${msg.to}`);
         if (!ipcars.has(msg.to)) {
