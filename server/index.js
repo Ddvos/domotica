@@ -370,7 +370,7 @@ wsServer2.on('connection', (socket,req) => {
     }
 
     if (msg.type === 'answer') {
-     // console.log("antwoord ontvangen van scherm en stuur naar car")
+      console.log("antwoord ontvangen van ip-car en stuur naar controller")
         info(`ipcar ${msg.from} sent answer to controller ${msg.to}`);
         if (!controllers.has(msg.to)) {
           warn(`offer sent to controller ${msg.to} that's not registered`);
