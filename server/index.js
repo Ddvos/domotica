@@ -322,7 +322,7 @@ wsServer2.on('connection', (socket,req) => {
      setByTypeData[peerType].add(peerId);
       sockets2.set(peerId, socket);
 
-     // console.log( sockets);
+     console.log( sockets2);
 
       if (peerType === 'controller') {
         socket.send(JSON.stringify({
