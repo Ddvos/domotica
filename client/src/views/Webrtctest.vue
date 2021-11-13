@@ -94,13 +94,14 @@ async carControl(){
                   connections.set(Raspberrypi, peerConnection);
                   // peerConnection.addStream(window.v.srcObject);
                   this.sendChannel = peerConnection.createDataChannel('sendDataChannel');
-                  
+                  // this.sendChannel.onopen = this.handleSendChannelStatusChange();
+                  // this.sendChannel.onclose = this.handleSendChannelStatusChange();
                 
                   const sdp = await peerConnection.createOffer();
                   await peerConnection.setLocalDescription(sdp);
                   peerConnection.onicecandidate = (e) => {
                     if (e.candidate) {
-                      console.log("ice candidate wordt aangemaakt")
+                      console.log(e)
                       socket.send(JSON.stringify({
                         type: 'candidate',
                         from: peerId,
@@ -109,7 +110,7 @@ async carControl(){
                       }));
                     }
                   };
-                   console.log("offer wordt gestuurd")
+                  console.log("offer wordt gestuurd")
                   socket.send(JSON.stringify({
                     type: 'offer',
                     to: Raspberrypi,
@@ -119,6 +120,7 @@ async carControl(){
                 }
               }
               if (msg.type === 'answer') {
+                console.log("antwoord van raspberrypi binnen")
                 const peerConnection = connections.get(msg.from);
                 peerConnection.setRemoteDescription(msg.data);
               }
@@ -131,6 +133,7 @@ async carControl(){
                 }
               }
               if (msg.type === 'candidate') {
+                console.log('Adding candidate to', msg.from);
                 const connection = connections.get(msg.from);
                 if (connection) {
                   console.log('Adding candidate to', msg.from);
@@ -149,7 +152,7 @@ async carControl(){
   },
   sendData: function(){
       this.sendChannel.send(this.data);
-  }
+  },
 
 
   

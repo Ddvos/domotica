@@ -394,6 +394,7 @@ export default {
 
               peerConnection.onicecandidate = (e) => {
                   console.log('set icecandidate');
+                  console.log( e.candidate);
                 if (e.candidate) {
                   socket.send(JSON.stringify({
                     type: 'candidate',

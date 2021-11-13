@@ -116,7 +116,7 @@ export default {
                   await peerConnection.setLocalDescription(sdp);
                   peerConnection.onicecandidate = (e) => {
                     if (e.candidate) {
-                      //console.log("set ice candidate")
+                      console.log("set ice candidate")
                       socket.send(JSON.stringify({
                         type: 'candidate',
                         from: peerId,
