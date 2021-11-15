@@ -104,7 +104,7 @@ async carControl(){
                   await peerConnection.setLocalDescription(sdp);
                   peerConnection.onicecandidate = (e) => {
                     if (e.candidate) {
-                      console.log(e.candidate)
+                      console.log(e )
                       socket.send(JSON.stringify({
                         type: 'candidate',
                         from: peerId,

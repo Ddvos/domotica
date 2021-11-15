@@ -384,6 +384,7 @@ wsServer2.on('connection', (socket,req) => {
 
     if (msg.type === 'candidate') {
       console.log(`ice candidate from ${msg.from}`)
+      console.log(msg)
       info(`ice candidate from ${msg.from} to ${msg.to}`);
       const socketTo = sockets2.get(msg.to);
 
