@@ -94,14 +94,17 @@ async carControl(){
                   connections.set(Raspberrypi, peerConnection);
                   // peerConnection.addStream(window.v.srcObject);
                   this.sendChannel = peerConnection.createDataChannel('sendDataChannel');
-                  // this.sendChannel.onopen = this.handleSendChannelStatusChange();
+                  this.sendChannel.onopen = function(event) {
+                        console.log("hi you")
+                        channel.send('Hi you!');
+                  }
                   // this.sendChannel.onclose = this.handleSendChannelStatusChange();
                 
                   const sdp = await peerConnection.createOffer();
                   await peerConnection.setLocalDescription(sdp);
                   peerConnection.onicecandidate = (e) => {
                     if (e.candidate) {
-                      console.log(e)
+                      console.log(e.candidate)
                       socket.send(JSON.stringify({
                         type: 'candidate',
                         from: peerId,
@@ -110,6 +113,7 @@ async carControl(){
                       }));
                     }
                   };
+                  console.log(peerConnection.localDescription)
                   console.log("offer wordt gestuurd")
                   socket.send(JSON.stringify({
                     type: 'offer',
@@ -134,6 +138,7 @@ async carControl(){
               }
               if (msg.type === 'candidate') {
                 console.log('Adding candidate to', msg.from);
+                console.log(msg);
                 const connection = connections.get(msg.from);
                 if (connection) {
                   console.log('Adding candidate to', msg.from);

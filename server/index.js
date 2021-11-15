@@ -318,11 +318,11 @@ wsServer2.on('connection', (socket,req) => {
       const { peerType } = msg;
 
       info(`${peerType} registered, id: ${peerId}`);
-    console.log(msg.peerId)
+    //console.log(msg.peerId)
      setByTypeData[peerType].add(peerId);
       sockets2.set(peerId, socket);
 
-     console.log( sockets2);
+    // console.log( sockets2);
 
       if (peerType === 'controller') {
         socket.send(JSON.stringify({
