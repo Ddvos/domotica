@@ -1,10 +1,5 @@
 <template>
-<div class="background" ref="mouseEvent">
-    <h2>controller</h2>
-    <button v-on:click="carControl">connect</button>
-    <button v-on:click="sendData">send</button>
-</div>
-  
+
 </template>
 
 
@@ -23,15 +18,11 @@ export default {
   }},
  
    created: function(){
-           
-
-     
+               
 
      },
   
   computed: {
-   
-
    
   },
   methods:{ 
@@ -46,7 +37,7 @@ export default {
 
               /// websocket WebRTC for car cocontrol. This is the sending side to the Raspberry Pi
  // chaneel waarover data gestuurd word
-
+          console.log("link naar component werktS")
           const config = {
             sdpSemantics: 'unified-plan',
             iceServers: [{
@@ -142,11 +133,6 @@ export default {
                           data: peerConnection.localDescription,
                         }));
                      })
-
-
-             
-
-
                 }
               }
               if (msg.type === 'answer') {
@@ -168,17 +154,6 @@ export default {
                   connections.delete(msg.from);
                 }
               }
-              if (msg.type === 'candidate') {
-                console.log('Adding candidate to', msg.from);
-                //console.log(msg.data.candidate);
-                const connection = connections.get(msg.from);
-                // if (connection) {
-                //   connection.addIceCandidate(new RTCIceCandidate(
-                //     msg.data
-                //   ));
-
-                // }
-              }
             });
           } catch (e) {
             console.log("error: "+e);
@@ -186,7 +161,7 @@ export default {
         },
       
    
-  },
+  },// einde controller connection
   
 
 

@@ -22,6 +22,21 @@ const routes = [
   name: 'webrtctest',
   component:() => import(/* webpackChunkName: "livestream" */ '../views/Webrtctest'),
 },
+{
+  path:'/raspberrypi',
+  name: 'raspberrypi',
+  component:() => import(/* webpackChunkName: "livestream" */ '../views/raspberrypi'),
+},
+{
+  path:'/controller',
+  name: 'controller',
+  component:() => import(/* webpackChunkName: "livestream" */ '../views/Controller'),
+},
+{
+  path:'/chris',
+  name: 'chris',
+  component:() => import(/* webpackChunkName: "livestream" */ '../views/chris'),
+},
 
 ]
 

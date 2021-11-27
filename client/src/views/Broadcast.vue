@@ -112,11 +112,14 @@ export default {
                     peerConnection.addTrack(track, mediaStream);
                     //console.log(track)
                   }
+                   console.log(peerConnection)
                   const sdp = await peerConnection.createOffer();
                   await peerConnection.setLocalDescription(sdp);
+                 
                   peerConnection.onicecandidate = (e) => {
                     if (e.candidate) {
                       console.log("set ice candidate")
+                      console.log(e)
                       socket.send(JSON.stringify({
                         type: 'candidate',
                         from: peerId,
@@ -125,18 +128,23 @@ export default {
                       }));
                     }
                   };
+                 
                   socket.send(JSON.stringify({
                     type: 'offer',
                     to: screen,
                     from: peerId,
                     data: peerConnection.localDescription,
                   }));
+
+                  //console.log(peerConnection.localDescription.sdp)
+                console.log(peerConnection.connectionState)
                 }
               }
               if (msg.type === 'answer') {
                // console.log("antwoord van screen")
                 const peerConnection = connections.get(msg.from);
-                peerConnection.setRemoteDescription(msg.data);
+                await peerConnection.setRemoteDescription(msg.data);
+                console.log(peerConnection)
               }
               if (msg.type === 'disconnect') {
                 const connection = connections.get(msg.from);
@@ -148,11 +156,15 @@ export default {
               }
               if (msg.type === 'candidate') {
                 const connection = connections.get(msg.from);
+                 
                 if (connection) {
                  // console.log('Adding candidate to', msg.from);
+                 
                   connection.addIceCandidate(new RTCIceCandidate(
                     msg.data
                   ));
+                  
+                  console.log(connection.connectionState)
                 }
               }
             });
