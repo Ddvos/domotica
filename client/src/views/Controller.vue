@@ -268,7 +268,7 @@ export default {
         if( this.controller == "online"){
           if(this.touchState == false){
             sendChannel.send("steering: "+this.xAxesLeft+", speed: "+this.sendSpeedValue+", camera: "+this.optionButton+""); //JSON.stringify({steering: this.xAxesLeft, speed: this.sendSpeedValue, camera: this.optionButton })
-            console.log( this.sendSpeedValue);
+            //console.log( this.sendSpeedValue);
           }
         }
         }
