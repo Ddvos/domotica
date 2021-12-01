@@ -267,7 +267,7 @@ export default {
         //console.log( this.xAxesLeft)
         if( this.controller == "online"){
           if(this.touchState == false){
-            sendChannel.send(JSON.stringify({steering: this.xAxesLeft, speed: this.sendSpeedValue, camera: this.optionButton }));
+            sendChannel.send("steering: "+this.xAxesLeft+", speed: "+this.sendSpeedValue+", camera: "+this.optionButton+""); //JSON.stringify({steering: this.xAxesLeft, speed: this.sendSpeedValue, camera: this.optionButton })
             console.log( this.sendSpeedValue);
           }
         }
@@ -365,7 +365,7 @@ export default {
                           _this.controller = "online"
                            _this.online()
                           console.log("hi you")
-                          sendChannel.send('Hi raspberrypi!');
+                          //sendChannel.send(['Hi raspberrypi!']);
                     }
                     console.log(sendChannel)
                   // this.sendChannel.onclose = this.handleSendChannelStatusChange();
