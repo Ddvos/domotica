@@ -400,13 +400,15 @@ wsServer2.on('connection', (socket,req) => {
 
   const onClose = () => {
     info(`socket closed ${peerId}`);
-    console.log("Controller socket closed")
+   
     let sendDisconnectTo;
     if (Raspberrypis.has(peerId)) {
+      console.log("IP-Car send disconect to controller")
       sendDisconnectTo = controllers;
     }
 
     if (controllers.has(peerId)) {
+      console.log("Controller send disconect to IP-Car")
       sendDisconnectTo = Raspberrypis;
     }
 
