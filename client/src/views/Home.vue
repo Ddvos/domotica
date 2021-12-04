@@ -62,6 +62,7 @@
 import Joystick1 from '../components/joystick';
 import Joystick2 from '../components/joystick';
 import controllerConnection from '../components/controllerConnection';
+import { useHead } from '@vueuse/head'
 
 //  var port = new osc.WebSocketPort({
 //           url: "wss://circusfamilyprojects.nl:8084" // ws://localhost:8083 online server wss://circusfamilyprojects.nl:8084
@@ -74,8 +75,20 @@ let _this = null
 
 export default {
   
+  
 
   data() {
+
+    useHead({
+      // Can be static or computed
+      meta: [
+        {
+          name: `viewport`,
+          content: "initial-scale=1, viewport-fit=cover",
+        },
+      ],
+    })
+
   return{
     
     status: "offline",
@@ -109,12 +122,12 @@ export default {
         speed: 0,
         angle: 0
       },
-    metaInfo: {
-      meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport',  content:"initial-scale=1, viewport-fit=cover" }
-      ]
-    }
+    // metaInfo: {
+    //   meta: [
+    //     { charset: 'utf-8' },
+    //     { name: 'viewport',  content:"initial-scale=1, viewport-fit=cover" }
+    //   ]
+    // }
     
      
     
@@ -133,6 +146,7 @@ export default {
 
 
      },
+     
     mounted: function(){
        let _this = this;
        this.$refs.mouseEvent.addEventListener('touchmove',(event) =>{
