@@ -31,7 +31,7 @@
           <li>Snelheid: {{realSpeed}}km/h</li>
           <li>Accu: {{accu}}%</li>
           <li>Trim: {{trim}}</li>
-          <li><input type="checkbox" id="checkbox" v-model="touchState">
+          <li><input type="checkbox" id="checkbox" v-on:click="touchSwitch" v-model="touchState" >
               <label for="checkbox">Touch control: {{ touchState }}</label></li>
           <!-- <li>Verlichting: {{light}}</li>
           <li>Camera: {{camera}}</li> -->
@@ -44,9 +44,10 @@
        
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
-    <Joystick1 class="joystick1" @change="handleChange('left', $event);" /> 
-    <Joystick2 class="joystick2" @change="handleChange('right', $event);" />
-
+    <div v-if="touchVisibilty">
+      <Joystick1 class="joystick1" @change="handleChange('left', $event);" /> 
+      <Joystick2 class="joystick2" @change="handleChange('right', $event);" />
+    </div>
     <!-- <MultiTouch  class="multitouch"/>       -->
  </div>
 </div>
@@ -94,6 +95,7 @@ export default {
     desktop: true,
     mobile: false,
     touchState: false,
+    touchVisibilty:false,
     optionButton: 0,
     leftStick: {
         x: 0,
@@ -129,6 +131,7 @@ export default {
        this.gameController()  
        _this = this
 
+
      },
     mounted: function(){
        let _this = this;
@@ -158,6 +161,16 @@ export default {
    
   },
   methods:{ 
+     touchSwitch : function() { // function for turning on and off touch control
+       if (this.touchVisibilty==false){
+       
+            this.touchVisibilty=true
+       }else{
+         this.touchVisibilty=false
+       }
+      
+       
+    },
      gameController(){
          // gamepadconnected with pc
           
@@ -212,7 +225,7 @@ export default {
       inputController(){
 
         const gamepads = navigator.getGamepads()
-
+      
 
         if(gamepads[0]){
           // console.log(gamepads[0]);
@@ -291,7 +304,7 @@ export default {
             }
       },
       online(){ // set everything on online
-        console.log("Wat is online? "+this.controller+" " + this.camera)
+        //console.log("Wat is online? "+this.controller+" " + this.camera)
        if( this.controller == "online" && this.camera == "online"){
          this.status = "connected"
          this.statusButton = "connected"
@@ -385,10 +398,15 @@ export default {
                               let checkState = () =>{
                                 console.log(peerConnection.iceGatheringState )
                                  _this.status = " Ice gathering "
+                                 
                                   if (peerConnection.iceGatheringState === 'complete') {
                                       peerConnection.removeEventListener('icegatheringstatechange', checkState);
                                       resolve();
                                   }
+                                  setTimeout(() => {// if gathering from icecandidates takes longer than 2.5secondes stop gathering ice candidates
+                                      peerConnection.removeEventListener('icegatheringstatechange', checkState);
+                                      resolve();
+                                    }, 2500)
                               }
                              peerConnection.addEventListener('icegatheringstatechange', checkState);
                           }

@@ -126,6 +126,7 @@ export default {
                             resolve();
                         } else {
                             function checkState() {
+                              console.log("Ice gathering")
                                 if (peerConnection.iceGatheringState === 'complete') {
                                     peerConnection.removeEventListener('icegatheringstatechange', checkState);
                                     resolve();
