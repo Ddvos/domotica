@@ -9,5 +9,43 @@ module.exports={
                 target:'http://localhost:5000'
             }
         }
-    },  
+    },
+    pwa: {
+        name: 'Car control',
+        themeColor: "#03566b",
+        msTileColor: "#03566b",
+        orientation:  "landscape",
+        appleMobileWebAppCache: "yes",
+        appleMobileWebAppStatusBarStyle: 'black',
+        workboxPluginMode: 'InjectManifest',
+        workboxOptions: {
+          // swSrc is required in InjectManifest mode.
+          swSrc: 'src/service-worker.js',
+          // ...other Workbox options...
+        },
+        manifestOptions: {
+          description: 'With this app you can control a remote car',
+          background_color: "#03566b",
+          icons: [
+            {
+              src: `/img/logo.png`,
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "any"
+            },
+            {
+              src: `/img/logo.svg`,
+              sizes: "144x144",
+              type: "image/svg",
+              purpose: "any"
+            },
+            {
+              src: `/img/logo.svg`,
+              sizes: "192x192",
+              type: "image/svg",
+              purpose: "any"
+            },
+          ],
+        }
+      },
 }
