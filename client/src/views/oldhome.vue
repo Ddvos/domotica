@@ -3,7 +3,7 @@
   <div class="row" v-if="desktop">
     <div class="information" >
       <div class="data">
-        <h4>IP CarDesktop</h4>
+        <h4>IP Car V3 Desktop</h4>
          <ul>
           <li>Status: {{status}}</li>
           <li>Snelheid: {{realSpeed}}km/h</li>
@@ -25,13 +25,13 @@
   <div class="row" v-if="mobile">
     <div class="information" >
       <div class="data">
-        <h4 class="namecar">IP car</h4><div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
+        <h4 class="namecar">IP car4</h4><div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
          <ul>
           <li>Status: {{status}}</li>
           <li>Snelheid: {{realSpeed}}km/h</li>
           <li>Accu: {{accu}}%</li>
           <li>Trim: {{trim}}</li>
-          <li><input type="checkbox" id="checkbox" v-on:click="touchSwitch" v-model="touchState" >
+          <li><input type="checkbox" id="checkbox" v-model="touchState">
               <label for="checkbox">Touch control: {{ touchState }}</label></li>
           <!-- <li>Verlichting: {{light}}</li>
           <li>Camera: {{camera}}</li> -->
@@ -44,10 +44,9 @@
        
         <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
     </div>
-    <div v-if="touchVisibilty">
-      <Joystick1 class="joystick1" @change="handleChange('left', $event);" /> 
-      <Joystick2 class="joystick2" @change="handleChange('right', $event);" />
-    </div>
+    <Joystick1 class="joystick1" @change="handleChange('left', $event);" /> 
+    <Joystick2 class="joystick2" @change="handleChange('right', $event);" />
+
     <!-- <MultiTouch  class="multitouch"/>       -->
  </div>
 </div>
@@ -58,10 +57,10 @@
             
 <script>
 //import osc from "osc";
-
+import io from "socket.io-client";
 import Joystick1 from '../components/joystick';
 import Joystick2 from '../components/joystick';
-import controllerConnection from '../components/controllerConnection';
+// import MultiTouch from '../components/multitouch';
 
 //  var port = new osc.WebSocketPort({
 //           url: "wss://circusfamilyprojects.nl:8084" // ws://localhost:8083 online server wss://circusfamilyprojects.nl:8084
@@ -69,8 +68,12 @@ import controllerConnection from '../components/controllerConnection';
 
 //  port.open();
 
-let   sendChannel = null // channel waarover data gestuurd gaat worden  
-let _this = null
+ //connect to server
+let ipcar = io.connect("https://stepverder.nl:6500", {
+    reconnectionDelay: 2000,
+    timeout: 20000,
+  }) // poort to connect with met settings
+
 
 export default {
   
@@ -78,7 +81,7 @@ export default {
   data() {
   return{
     
-    status: "offline",
+    status: "connect",
     statusButton: "connect",
     speed: 0,
     realSpeed:0,
@@ -86,7 +89,6 @@ export default {
     trim: 0,
     light: "uit",
     camera: "offline",
-    controller: "offline",
     xAxesLeft: 0,
     sendSpeedValue: 0,
     Inactive: true,
@@ -95,7 +97,6 @@ export default {
     desktop: true,
     mobile: false,
     touchState: false,
-    touchVisibilty:false,
     optionButton: 0,
     leftStick: {
         x: 0,
@@ -122,19 +123,18 @@ export default {
     components: {
      'Joystick1': Joystick1,
      'Joystick2': Joystick2,
-    controllerConnection
+    //  'MultiTouch': MultiTouch,
      
   
   },
    created: function(){
            
        this.gameController()  
-       _this = this
-
+       this.siteVisitor();  
+     
 
      },
     mounted: function(){
-       let _this = this;
        this.$refs.mouseEvent.addEventListener('touchmove',(event) =>{
           event.preventDefault();
           event.stopImmediatePropagation();
@@ -161,22 +161,35 @@ export default {
    
   },
   methods:{ 
-     touchSwitch : function() { // function for turning on and off touch control
-       if (this.touchVisibilty==false){
-       
-            this.touchVisibilty=true
-       }else{
-         this.touchVisibilty=false
-       }
-      
-       
-    },
+     siteVisitor: function(){
+
+      ipcar.on("welcome",(data)=>{
+          console.log(data)
+        })
+
+         ipcar.on("clientList",(clients)=>{
+          console.log(clients)
+        })
+
+        //ipcar.emit("joinIPcar", "clientRoom");
+
+        ipcar.on("newUser",(res) =>{
+          console.log(res)
+
+        })
+
+        ipcar.on("disconnect"),(res)=>{
+            console.log("controller send niet naar server"+ res)
+        }
+
+       ///raum.on("err",(err)=> console.log(err))
+       //raum.on("succes",(res)=> console.log(res))
+     },
      gameController(){
          // gamepadconnected with pc
           
            window.addEventListener("gamepadconnected", () => {
-               //this.hideGamepad = false;  
-              // console.log("controller")        
+               //this.hideGamepad = false;          
               this.inputController()
               //gamepads is an array with all the gamepad buttons
               this.gamepads = navigator.getGamepads();
@@ -218,14 +231,14 @@ export default {
 
        
         if( this.mobile== true && this.touchState == true){
-          console.log(this.speed)
-          sendChannel.send([this.xAxesLeft,this.speed ]);
+         //console.log(this.speed)
+          ipcar.emit("controllerInput", [this.xAxesLeft,this.speed ]);
         }
       },
       inputController(){
 
         const gamepads = navigator.getGamepads()
-      
+
 
         if(gamepads[0]){
           // console.log(gamepads[0]);
@@ -278,12 +291,11 @@ export default {
            this.sendSpeedValue = 1500; // voor en achteruit tegelijk is 0
         }
         //console.log( this.xAxesLeft)
-        if( this.controller == "online"){
-          if(this.touchState == false){
-            sendChannel.send("steering: "+this.xAxesLeft+", speed: "+this.sendSpeedValue+", camera: "+this.optionButton+""); //JSON.stringify({steering: this.xAxesLeft, speed: this.sendSpeedValue, camera: this.optionButton })
-            //console.log( this.sendSpeedValue);
-          }
+        if(this.touchState == false){
+          ipcar.volatile.emit("controllerInput", [this.xAxesLeft,this.sendSpeedValue, this.optionButton ]);
+          //console.log( this.Kruisje);
         }
+
         }
         
       window.requestAnimationFrame(this.inputController) // this reload the function inputcontroller function every framerate
@@ -292,166 +304,17 @@ export default {
             return ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min).toFixed(0)
       },
       connect(){
-          this.carControl() // maakt de data verbinding 
-          this.videoStream() // maakt de video verbinding 
+          this.videoStream()
 
          this.internetConnection = window.navigator.onLine;
 
          if ( this.internetConnection) {
-                this.status = "internet"
+                this.status = "connected to internet"
             } else {
                 this.status = "No internet"
             }
       },
-      online(){ // set everything on online
-        //2wwwconsole.log("Wat is online? "+this.controller+" " + this.camera)
-       if( this.controller == "online" && this.camera == "online"){
-         this.status = "connected"
-         this.statusButton = "connected"
-
-       }
-
-      },
-      async carControl(){ // verbinding controller
-
-          /// websocket WebRTC for car cocontrol. This is the sending side to the Raspberry Pi
-          // chaneel waarover data gestuurd word
-          const config = {
-            sdpSemantics: 'unified-plan',
-            iceCandidatePoolSize: 4,
-            //iceTransportPolicy: "relay",
-            iceServers: [{
-              urls: 'turn:turn.stepverder.nl:3478', //'stun:stun.l.google.com:19302'  turn:178.62.209.37:3478 circusfamilyprojects.nl
-               username: 'Dominique',
-               credential: 'WS7Yq_jT'
-            
-            },]
-          };
-          // const getRandomId = () => {
-          //   return Math.floor(Math.random() * 10000);
-          // };
-          const peerId = 'controldata'
-          const peerType = 'controller';
-          const connections = new Map();
-          let ws;
-          const getSocket = async (peerId, peerType) => {
-            if (ws) return ws;
-            return new Promise((resolve, reject) => {
-              try {
-             
-                ws = new WebSocket('wss://stepverder.nl:4084/controller');  // ws://localhost:4083 online server wss://circusfamilyprojects.nl:8084
-               
-                const onOpen = () => {
-                  ws.send(JSON.stringify({
-                    type: 'register',
-                    peerType,
-                    peerId,
-                  }));
-                  ws.removeEventListener('open', onOpen);
-                  resolve(ws);
-                };
-                ws.addEventListener('open', onOpen);
-              } catch (e) {
-                reject(e);
-                console.log(e)
-              }
-            });
-          };
-          try {
-            console.log('in controller');
-          // console.log(this.carNumber);
-         
-            const socket = await getSocket(peerId, peerType);
-            socket.addEventListener('message', async (e) => {
-              const msg = JSON.parse(e.data);
-              //console.log('msg', msg);
-              if (msg.type === 'Raspberrypis') {
-                console.log("raspberry pi probeert te verbinden")
-                for (let Raspberrypi of msg.Raspberrypis) {
-                  const peerConnection = new RTCPeerConnection(config);
-                  connections.set(Raspberrypi, peerConnection);
-                  // peerConnection.addStream(window.v.srcObject);
-                    peerConnection.addEventListener('icegatheringstatechange', ()=>{;
-                       console.log(peerConnection.connectionState)
-                     })
-                    sendChannel = peerConnection.createDataChannel('sendDataChannel', {ordered: false, maxRetransmits: 0})
-                    sendChannel.onopen = function(event) {
-                          _this.status = "controller "
-                          _this.controller = "online"
-                           _this.online()
-                          console.log("hi you")
-                          //sendChannel.send(['Hi raspberrypi!']);
-                    }
-                    console.log(sendChannel)
-                  // this.sendChannel.onclose = this.handleSendChannelStatusChange();
-
-              
-                 await peerConnection.createOffer().then(function(offer) {
-                      return peerConnection.setLocalDescription(offer);
-                  }).then(function() {
-                      // wait for ICE gathering to complete
-                      return new Promise((resolve) => {
-                          if (peerConnection.iceGatheringState === 'complete') {
-                              _this.status = "complete"
-                              resolve();
-                          } else {
-                              let checkState = () =>{
-                                console.log(peerConnection.iceGatheringState )
-                                 _this.status = " Ice gathering "
-                                 
-                                  if (peerConnection.iceGatheringState === 'complete') {
-                                      peerConnection.removeEventListener('icegatheringstatechange', checkState);
-                                      resolve();
-                                  }
-                                  setTimeout(() => {// if gathering from icecandidates takes longer than 2.5secondes stop gathering ice candidates
-                                      peerConnection.removeEventListener('icegatheringstatechange', checkState);
-                                      resolve();
-                                    }, 2500)
-                              }
-                             peerConnection.addEventListener('icegatheringstatechange', checkState);
-                          }
-                      });
-                  }).then(function(){
-                        console.log(peerConnection)
-
-                        //console.log(peerConnection.localDescription.sdp)
-                        console.log("offer wordt gestuurd")
-                        socket.send(JSON.stringify({
-                          type: 'offer',
-                          to: Raspberrypi,
-                          from: peerId,
-                          data: peerConnection.localDescription,
-                        }));
-                     })
-                }
-              }
-              if (msg.type === 'answer') {
-                console.log("antwoord van raspberrypi binnen")
-                const peerConnection = connections.get(msg.from);
-                console.log(msg.data.sdp)
-                await peerConnection.setRemoteDescription(msg.data);
-
-                console.log(peerConnection)
-                console.log(peerConnection.connectionState)
-                console.log(peerConnection.iceConnectionState)
-                console.log(peerConnection.signalingState)           
-              }
-              if (msg.type === 'disconnect') {
-                const connection = connections.get(msg.from);
-                _this.status = "controller disconnect"
-                _this.statusButton = "connect"
-                if (connection) {
-                  console.log('Disconnecting from', msg.from);
-                  connection.close();
-                  connections.delete(msg.from);
-                }
-              }
-            });
-          } catch (e) {
-            console.log("error: "+e);
-          }
-        },// einde controller connection
-     async videoStream(){ /// begin video verbinding 
+       async videoStream(){
 
               /// websocket WebRTC for live stream
       
@@ -513,17 +376,16 @@ export default {
              console.log(msg)
                
             if (msg.type === 'offer') {
+              console.log("hallo")
               const peerConnection = new RTCPeerConnection(config);
               connections.set(msg.from, peerConnection);
                 console.log('incoming data ');
-                 this.camera = "online";
-                 this.statusButton = "online",
+                 this.camera = "Online";
+                 this.statusButton = "connected",
                  this.InActive = false
                  this.Active = true
 
               peerConnection.ontrack = (e) => {
-                this.status = "camera"
-                _this.online()
                 console.log('on track', e);
                 window.v.srcObject = e.streams[0];
                  window.v.play();
@@ -562,7 +424,6 @@ export default {
             if (msg.type === 'disconnect') {
               const connection = connections.get(msg.from);
               if (connection) {
-                 this.status = "camera disconnect"
                  this.camera = "Offline";
                   this.statusButton = "connect",
                   this.InActive = true
@@ -579,7 +440,7 @@ export default {
               console.log(msg.data)
               
               const connection = connections.get(msg.from);
-                //console.log(connection)
+                console.log(connection)
               if (connection) {
                 console.log('Adding candidate to', msg.from);
                 connection.addIceCandidate(new RTCIceCandidate(
@@ -602,7 +463,7 @@ export default {
       },
       
    
-  },  // einde video verbinding 
+  },
   
 }
 
@@ -631,7 +492,6 @@ export default {
   color: white;
   margin-top: 20px;
   margin-left: 20px;
-  font-size: 13px;
   text-align: left;
   width: 100%;
   height: 100vh;
