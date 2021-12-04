@@ -304,7 +304,7 @@ export default {
             }
       },
       online(){ // set everything on online
-        //console.log("Wat is online? "+this.controller+" " + this.camera)
+        //2wwwconsole.log("Wat is online? "+this.controller+" " + this.camera)
        if( this.controller == "online" && this.camera == "online"){
          this.status = "connected"
          this.statusButton = "connected"

@@ -112,7 +112,7 @@ export default {
     metaInfo: {
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport',  content:"width=device-width, viewport-fit=cover, initial-scale=1.0" }
+        { name: 'viewport',  content:"width=device-width, initial-scale=1.0, viewport-fit=cover" }
       ]
     }
     
@@ -637,8 +637,8 @@ export default {
   height: 100vh;
   background-color: #1e3a4291;
   padding: 12px;
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
+  /* padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right); */
 
 }
 h4{
