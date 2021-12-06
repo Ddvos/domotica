@@ -667,7 +667,7 @@ export default {
   overflow-x: hidden
 }
 .welcomeText{
-  margin-top: 50%;
+
   width: 100%;
 }
 .welcomeInfo{
