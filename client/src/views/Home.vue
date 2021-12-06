@@ -51,7 +51,7 @@
    </div>
    <div class="portrait " v-if="portrait">
      <div class="welcomeText">
-        <h1>Welkom</h1>
+        <h1>Welkom2</h1>
         <div class="welcomeInfo">
           <p>Kantel je smartphone, in landscape mode om de app te gebruiken</p>
           <p>Het is aan te raden om de website te installeren op het homescherm. Dit kan via de instellingen van de browser</p>
@@ -164,10 +164,11 @@ export default {
           this.portrait= true
           this.landscape= false
        }
-      window.addEventListener(// fires handleorentationchange function when oritien is changed 
-          "orientationchange",
-          this.handleOrientationChange
-        );
+      window.addEventListener('resize', this.handleOrientationChange)
+      // window.addEventListener(// fires handleorentationchange function when oritien is changed 
+      //     "orientationchange",
+      //     this.handleOrientationChange
+      //   );
        this.$refs.mouseEvent.addEventListener('touchmove',(event) =>{
           event.preventDefault();
           event.stopImmediatePropagation();
@@ -195,19 +196,32 @@ export default {
   },
   methods:{ 
      handleOrientationChange() {
-        if (window.matchMedia("(orientation:portrait)").matches) {
-            // landscape mode
-          this.orrientationPhone = "landscap"
+        
+      if(window.innerWidth > window.innerHeight) {
           this.portrait= false
           this.landscape= true
+          console.log("landscapp")
+       }
+        if(window.innerHeight> window.innerWidth) {
+          this.portrait= true
+          this.landscape= false
+          console.log("portrait") 
+       }
+        
+        
+        // if (window.matchMedia("(orientation:portrait)").matches) {
+        //     // landscape mode
+        //   this.orrientationPhone = "landscap"
+        //   this.portrait= false
+        //   this.landscape= true
     
-        } else if(window.matchMedia("(orientation: landscape)").matches)  {
-            // portrait mode
-            this.orrientationPhone = "portrait"
-            this.portrait= true
-            this.landscape= false
-            console.log("portrait")        
-        }
+        // } else if(window.matchMedia("(orientation: landscape)").matches)  {
+        //     // portrait mode
+        //     this.orrientationPhone = "portrait"
+        //     this.portrait= true
+        //     this.landscape= false
+        //     console.log("portrait")        
+        // }
   
     },
      touchSwitch : function() { // function for turning on and off touch control
