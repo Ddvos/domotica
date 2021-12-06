@@ -153,6 +153,12 @@ export default {
      
     mounted: function(){
        let _this = this;
+
+       // first load check website oritation
+       if(window.innerWidth > window.innerHeight) {
+          this.portrait= false
+          this.landscape= true
+       }
       window.addEventListener(// fires handleorentationchange function when oritien is changed 
           "orientationchange",
           this.handleOrientationChange
@@ -184,20 +190,21 @@ export default {
   },
   methods:{ 
      handleOrientationChange() {
-      const orientation = window.screen.orientation.type
-      if (orientation === "portrait-primary") {
-        // portrait mode
-        this.orrientationPhone = "portrait"
-        this.portrait= true
-        this.landscape= false
-        console.log("portrait")
-      } else if (orientation === "landscape-primary") {
-        // landscape mode
-        this.orrientationPhone = "landscap"
-        this.portrait= false
-        this.landscape= true
-        console.log("landscap")
-      }
+        if (window.matchMedia("(orientation:portrait)").matches) {
+            // landscape mode
+          this.orrientationPhone = "landscap"
+          this.portrait= false
+          this.landscape= true
+          console.log("landscap")
+        } else {
+           // portrait mode
+          this.orrientationPhone = "portrait"
+          this.portrait= true
+          this.landscape= false
+          console.log("portrait")
+        
+        }
+  
     },
      touchSwitch : function() { // function for turning on and off touch control
        if (this.touchVisibilty==false){
