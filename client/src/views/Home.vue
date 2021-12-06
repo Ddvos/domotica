@@ -158,6 +158,11 @@ export default {
        if(window.innerWidth > window.innerHeight) {
           this.portrait= false
           this.landscape= true
+                console.log("landscap")
+       }
+        if(window.innerHeight> window.innerWidth) {
+          this.portrait= true
+          this.landscape= false
        }
       window.addEventListener(// fires handleorentationchange function when oritien is changed 
           "orientationchange",
@@ -195,14 +200,13 @@ export default {
           this.orrientationPhone = "landscap"
           this.portrait= false
           this.landscape= true
-          console.log("landscap")
-        } else {
-           // portrait mode
-          this.orrientationPhone = "portrait"
-          this.portrait= true
-          this.landscape= false
-          console.log("portrait")
-        
+    
+        } else if(window.matchMedia("(orientation: landscape)").matches)  {
+            // portrait mode
+            this.orrientationPhone = "portrait"
+            this.portrait= true
+            this.landscape= false
+            console.log("portrait")        
         }
   
     },
