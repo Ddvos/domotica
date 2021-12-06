@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7ee35721f07f0faae762",
+    "revision": "42c3e57c5b07f74ad0a7",
     "url": "/css/app.css"
   },
   {
@@ -8,11 +8,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/css/livestream.css"
   },
   {
-    "revision": "45c71d29f51b80fa9a5b3dc99561dabf",
+    "revision": "851c30709db5f61a5358c309fef4daae",
     "url": "/index.html"
   },
   {
-    "revision": "7ee35721f07f0faae762",
+    "revision": "42c3e57c5b07f74ad0a7",
     "url": "/js/app.js"
   },
   {
@@ -24,7 +24,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/livestream.js"
   },
   {
-    "revision": "c86e6745a7e0a3edc2fcdd485471d115",
+    "revision": "6aac7cfd1a198e45864c482d25a607a8",
     "url": "/manifest.json"
   },
   {

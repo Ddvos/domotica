@@ -12,8 +12,8 @@ module.exports={
     },
     pwa: {
         name: 'Car control',
-        themeColor: "#03566b",
-        msTileColor: "#03566b",
+        themeColor: "#051b2c",
+        msTileColor: "#051b2c",
         orientation:  "landscape",
         appleMobileWebAppCache: "yes",
         appleMobileWebAppStatusBarStyle: 'black',
@@ -25,7 +25,7 @@ module.exports={
         },
         manifestOptions: {
           description: 'With this app you can control a remote car',
-          background_color: "#03566b",
+          background_color: "#051b2c",
           icons: [
             {
               src: `/img/logo.png`,

@@ -23,33 +23,42 @@
 
  </div>
   <div class="row" v-if="mobile">
-    <div class="information" >
-      <div class="data">
-        <h4 class="namecar">IP carv2</h4><div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
-         <ul>
-          <li>Status: {{status}}</li>
-          <li>Snelheid: {{realSpeed}}km/h</li>
-          <li>Accu: {{accu}}%</li>
-          <li>Trim: {{trim}}</li>
-          <li><input type="checkbox" id="checkbox" v-on:click="touchSwitch" v-model="touchState" >
-              <label for="checkbox">Touch control: {{ touchState }}</label></li>
-          <!-- <li>Verlichting: {{light}}</li>
-          <li>Camera: {{camera}}</li> -->
-        </ul>
-        
+    <div class="landscape " v-if="landscape">
+      <div class="information" >
+        <div class="data">
+          <h4 class="namecar">IP CAR</h4><div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
+          <ul>
+            <li>Status: {{status}}</li>
+            <li>Snelheid: {{realSpeed}}km/h</li>
+            <li>Accu: {{accu}}%</li>
+            <li>Trim: {{trim}}</li>
+            <li>Phone: {{orrientationPhone}}</li>
+            <li><input type="checkbox" id="checkbox" v-on:click="touchSwitch" v-model="touchState" >
+                <label for="checkbox">Touch control</label></li>
+            <!-- <li>Verlichting: {{light}}</li>
+            <li>Camera: {{camera}}</li> -->
+          </ul>       
+         </div>
       </div>
+      <div class="livefeed">    
+          <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
+      </div>
+      <div v-if="touchVisibilty">
+        <Joystick1 class="joystick1" @change="handleChange('left', $event);" /> 
+        <Joystick2 class="joystick2" @change="handleChange('right', $event);" />
+     </div>
+      <!-- <MultiTouch  class="multitouch"/>       -->
    </div>
-    <div class="livefeed">
-   
-       
-        <video mute='true' playsinline autoplay id='v'  ></video> <!--  //v-bind:style="{ 'border': '7px solid'+color1.hex+'' }" -->
+   <div class="portrait " v-if="portrait">
+     <div class="welcomeText">
+        <h1>Welkom</h1>
+        <div class="welcomeInfo">
+          <p>Kantel je smartphone, in landscape mode om de app te gebruiken</p>
+          <p>Het is aan te raden om de website te installeren op het homescherm. Dit kan via de instellingen van de browser</p>
+        </div>
+     </div>
     </div>
-    <div v-if="touchVisibilty">
-      <Joystick1 class="joystick1" @change="handleChange('left', $event);" /> 
-      <Joystick2 class="joystick2" @change="handleChange('right', $event);" />
-    </div>
-    <!-- <MultiTouch  class="multitouch"/>       -->
- </div>
+  </div>
 </div>
   
 </template>
@@ -110,6 +119,9 @@ export default {
     touchState: false,
     touchVisibilty:false,
     optionButton: 0,
+    orrientationPhone: "portrait",
+    portrait: true,
+    landscape: false,
     leftStick: {
         x: 0,
         y: 0,
@@ -121,15 +133,7 @@ export default {
         y: 0,
         speed: 0,
         angle: 0
-      },
-    // metaInfo: {
-    //   meta: [
-    //     { charset: 'utf-8' },
-    //     { name: 'viewport',  content:"initial-scale=1, viewport-fit=cover" }
-    //   ]
-    // }
-    
-     
+      },   
     
   }},
     components: {
@@ -149,6 +153,10 @@ export default {
      
     mounted: function(){
        let _this = this;
+      window.addEventListener(// fires handleorentationchange function when oritien is changed 
+          "orientationchange",
+          this.handleOrientationChange
+        );
        this.$refs.mouseEvent.addEventListener('touchmove',(event) =>{
           event.preventDefault();
           event.stopImmediatePropagation();
@@ -175,6 +183,22 @@ export default {
    
   },
   methods:{ 
+     handleOrientationChange() {
+      const orientation = window.screen.orientation.type
+      if (orientation === "portrait-primary") {
+        // portrait mode
+        this.orrientationPhone = "portrait"
+        this.portrait= true
+        this.landscape= false
+        console.log("portrait")
+      } else if (orientation === "landscape-primary") {
+        // landscape mode
+        this.orrientationPhone = "landscap"
+        this.portrait= false
+        this.landscape= true
+        console.log("landscap")
+      }
+    },
      touchSwitch : function() { // function for turning on and off touch control
        if (this.touchVisibilty==false){
        
@@ -629,14 +653,39 @@ export default {
 .background{
   width: 100vw;
   height: 100vh;
-  background: #1e3a42;
+  background: #051b2c;
   overflow-x: hidden
+  
+}
+.landscape{
+  width: 100vw;
+  height: 100vh;
+}
+.portrait{
+  width: 100vw;
+  height: 100%;
+  overflow-x: hidden
+}
+.welcomeText{
+  margin-top: 50%;
+  width: 100%;
+}
+.welcomeInfo{
+  margin: 4%;
+  width: 94%;
+}
+.welcomeText p{
+  color: #3a4e63;
+  text-align: left;
+
   
 }
 
 .row,.col-9,.col-3{
      margin: 0;
     padding:0;
+      width: 100vw;
+  height: 100vh;
   }
 
 
@@ -649,11 +698,14 @@ export default {
   text-align: left;
   width: 100%;
   height: 100vh;
-  background-color: #1e3a4291;
+  background-color: #051b2c;
   padding: 12px;
-  /* padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right); */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right); 
 
+}
+h1{
+     font-size: 3em;
 }
 h4{
    margin-bottom: 5px;
@@ -717,7 +769,7 @@ margin-top:-20%;
 	border: 1px solid rgb(184, 46, 46);
   border-radius: 5px;
 	width: 95px;
-	padding: 10px 0;
+	padding: 5px 5px;
   margin-left: 10px;
 	text-align: center;
 	display: inline-block;
@@ -749,8 +801,8 @@ margin-top:-20%;
   display: inline-block;
    overflow: hidden;
    width: 80vw;
-  height: 99vh;
-  background-color: #2a2a2b;
+  height:100%;
+  background-color: #0a0a0a;
   z-index: 2;
 }
 
