@@ -6,4 +6,7 @@ import { createHead } from '@vueuse/head'
 
 const head = createHead()
 
-createApp(App).use(router, head).mount('#app')
+createApp(App)
+.use(router)
+.use(head)
+.mount('#app')
