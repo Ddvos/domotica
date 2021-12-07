@@ -725,7 +725,7 @@ export default {
   height: 100vh;
   background-color: #051b2c;
   padding-top: 12px;
-  padding-left: 8px
+  padding-left: 18px
 
 }
 h1{
