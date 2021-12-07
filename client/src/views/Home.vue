@@ -281,8 +281,7 @@ export default {
 
        
         if( this.mobile== true && this.touchState == true){
-          console.log(this.speed)
-          sendChannel.send([this.xAxesLeft,this.speed ]);
+           sendChannel.send("steering: "+this.xAxesLeft+", speed: "+this.sendSpeedValue+", camera: "+this.optionButton+"")
         }
       },
       inputController(){
@@ -725,7 +724,7 @@ export default {
   height: 100vh;
   background-color: #051b2c;
   padding-top: 12px;
-  padding-left: 18px
+  padding-left: 22px
 
 }
 h1{
