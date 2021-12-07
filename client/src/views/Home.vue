@@ -51,7 +51,7 @@
    </div>
    <div class="portrait " v-if="portrait">
      <div class="welcomeText">
-        <h1>Welkom2</h1>
+        <h1>Welkom</h1>
         <div class="welcomeInfo">
           <p>Kantel je smartphone, in landscape mode om de app te gebruiken</p>
           <p>Het is aan te raden om de website te installeren op het homescherm. Dit kan via de instellingen van de browser</p>
@@ -724,9 +724,10 @@ export default {
   width: 100%;
   height: 100vh;
   background-color: #051b2c;
-  padding: 12px;
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right); 
+  padding-top: 12px;
+  padding-left: 5px;
+  /* padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);  */
 
 }
 h1{
