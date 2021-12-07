@@ -725,7 +725,6 @@ export default {
   height: 100vh;
   background-color: #051b2c;
   padding-top: 12px;
-  padding-left: 5px;
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);  
 
