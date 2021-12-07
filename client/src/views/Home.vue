@@ -469,7 +469,7 @@ export default {
                                   setTimeout(() => {// if gathering from icecandidates takes longer than 2.5secondes stop gathering ice candidates
                                       peerConnection.removeEventListener('icegatheringstatechange', checkState);
                                       resolve();
-                                    }, 2500)
+                                    }, 4000)
                               }
                              peerConnection.addEventListener('icegatheringstatechange', checkState);
                           }
@@ -725,8 +725,7 @@ export default {
   height: 100vh;
   background-color: #051b2c;
   padding-top: 12px;
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);  
+  padding-left: 8px
 
 }
 h1{
