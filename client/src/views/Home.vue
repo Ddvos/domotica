@@ -281,7 +281,7 @@ export default {
 
        
         if( this.mobile== true && this.touchState == true){
-           sendChannel.send("steering: "+this.xAxesLeft+", speed: "+this.sendSpeedValue+", camera: "+this.optionButton+"")
+           sendChannel.send("steering: "+this.xAxesLeft+", speed: "+this.speed+", camera: "+this.optionButton+"")
         }
       },
       inputController(){
@@ -735,6 +735,7 @@ h4{
 }
 .namecar{
   display: inline;
+  margin-left:-6%;
 }
 
 ul {
@@ -808,8 +809,8 @@ margin-top:-20%;
   font-size: 100%;
 	border: 1px solid rgba(46, 184, 55,1);
   border-radius: 5px;
-	width: 95px;
-	padding: 10px 0;
+	width:40%;
+	padding: 5px 0;
 	text-align: center;
 	display: inline-block;
   margin-right: 10px;
