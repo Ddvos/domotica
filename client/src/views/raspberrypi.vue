@@ -105,13 +105,12 @@ export default {
               console.log('incoming data ');
             
               peerConnection.ondatachannel = ev => {
-                console.log(ev)
                  let receiveChannel = ev.channel;
                  receiveChannel.onopen = function() {
                       console.log('Verbonden');
                     };
                   receiveChannel.onmessage = function(evt) {
-                      console.log(evt)
+                      console.log(evt.data)
                   }
               }
               console.log(peerConnection);  

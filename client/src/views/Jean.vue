@@ -3,7 +3,7 @@
   <div class="row" v-if="desktop">
     <div class="information" >
       <div class="data">
-        <h4>IP CarDesktop</h4>
+        <h4>IP Car Jean</h4>
          <ul>
           <li>Status: {{status}}</li>
           <li>Snelheid: {{realSpeed}}km/h</li>
@@ -26,7 +26,7 @@
     <div class="landscape " v-if="landscape">
       <div class="information" >
         <div class="data">
-          <h4 class="namecar">IP CAR</h4><div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
+          <h4 class="namecar">IP CAR Jean</h4><div   v-bind:class="{ Buttonactive: Active, ButtonInactive: Inactive}" v-on:click="connect">{{statusButton}}</div>
           <ul>
             <li>Status: {{status}}</li>
             <li>Snelheid: {{realSpeed}}km/h</li>

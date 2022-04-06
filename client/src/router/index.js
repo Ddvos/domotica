@@ -13,6 +13,11 @@ const routes = [
     component:() => import(/* webpackChunkName: "livestream" */ '../views/About'),
 }, 
   {
+    path:'/jean',
+    name: 'jean',
+    component:() => import(/* webpackChunkName: "livestream" */ '../views/Jean'),
+  },
+  {
     path:'/broadcast/:id',
     name: 'Broadcast',
     component:() => import(/* webpackChunkName: "livestream" */ '../views/Broadcast'),
